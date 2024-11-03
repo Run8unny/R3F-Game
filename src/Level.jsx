@@ -73,7 +73,7 @@ function BlockSpinner({ position = [0, 0, 0] }) {
 					<mesh
 						geometry={boxGeometry}
 						material={obsticleMaterialOne}
-						scale={[3.75, 0.2, 0.2]}
+						scale={[3.7, 0.2, 0.2]}
 						castShadow
 						receiveShadow
 					/>
@@ -91,8 +91,8 @@ function BlockWallHorizontal({ position = [0, 0, 0] }) {
 		const time = state.clock.elapsedTime;
 		const x = -Math.sin(time + timeOffset);
 		obsticle.current.setNextKinematicTranslation({
-			x: x,
-			y: 1,
+			x: position[0] + x,
+			y: position[1] + 1,
 			z: position[2],
 		});
 	});
@@ -117,7 +117,7 @@ function BlockWallHorizontal({ position = [0, 0, 0] }) {
 					<mesh
 						geometry={boxGeometry}
 						material={obsticleMaterialOne}
-						scale={[1.9, 1.9, 0.2]}
+						scale={[1.85, 1.85, 0.2]}
 						castShadow
 						receiveShadow
 					/>
@@ -136,7 +136,7 @@ function BlockWallVertical({ position = [0, 0, 0] }) {
 		const y = Math.sin(time + timeOffset);
 		obsticle.current.setNextKinematicTranslation({
 			x: position[0],
-			y: y,
+			y: position[1] + y,
 			z: position[2],
 		});
 	});
@@ -161,7 +161,7 @@ function BlockWallVertical({ position = [0, 0, 0] }) {
 					<mesh
 						geometry={boxGeometry}
 						material={obsticleMaterialOne}
-						scale={[3.75, 1.9, 0.2]}
+						scale={[3.7, 1.85, 0.2]}
 						castShadow
 						receiveShadow
 					/>
