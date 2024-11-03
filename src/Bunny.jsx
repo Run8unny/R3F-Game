@@ -6,8 +6,6 @@ import { useControls } from 'leva';
 
 export default function Bunny() {
 	const bunny = useLoader(GLTFLoader, './Bunny.gltf');
-	console.log(bunny);
-
 	const animations = useAnimations(bunny.animations, bunny.scene);
 
 	const { animationName } = useControls({

@@ -1,8 +1,10 @@
 import { Instance } from '@react-three/drei';
 import { useFrame } from '@react-three/fiber';
 import { RigidBody } from '@react-three/rapier';
-import { useRef, useState } from 'react';
+import { useMemo, useRef, useState } from 'react';
 import * as THREE from 'three';
+import { useGLTF } from '@react-three/drei';
+
 //Geometry
 const boxGeometry = new THREE.BoxGeometry(1, 1, 1);
 //Materials
@@ -23,7 +25,7 @@ const wallMaterial = new THREE.MeshStandardMaterial({
 });
 
 //Floor
-function BlockFloor({ position = [0, 0, 0] }) {
+export function BlockFloor({ position = [0, 0, 0] }) {
 	return (
 		<>
 			<group position={position}>
@@ -40,7 +42,7 @@ function BlockFloor({ position = [0, 0, 0] }) {
 	);
 }
 
-function BlockBarVertical({ position = [0, 0, 0] }) {
+export function BlockBarVertical({ position = [0, 0, 0] }) {
 	const obsticle = useRef();
 	const [timeOffset] = useState(() => Math.random() * Math.PI * 2);
 
@@ -84,7 +86,7 @@ function BlockBarVertical({ position = [0, 0, 0] }) {
 	);
 }
 
-function BlockSpinner({ position = [0, 0, 0] }) {
+export function BlockSpinner({ position = [0, 0, 0] }) {
 	const obsticle = useRef();
 	const [speed] = useState(
 		() => (Math.random() + 0.2) * (Math.random() < 0.5 ? -1 : 1)
@@ -127,7 +129,7 @@ function BlockSpinner({ position = [0, 0, 0] }) {
 	);
 }
 
-function BlockWallHorizontal({ position = [0, 0, 0] }) {
+export function BlockWallHorizontal({ position = [0, 0, 0] }) {
 	const obsticle = useRef();
 	const [timeOffset] = useState(() => Math.random() * Math.PI * 2);
 
@@ -171,7 +173,7 @@ function BlockWallHorizontal({ position = [0, 0, 0] }) {
 	);
 }
 
-function BlockWallVertical({ position = [0, 0, 0] }) {
+export function BlockWallVertical({ position = [0, 0, 0] }) {
 	const obsticle = useRef();
 	const [timeOffset] = useState(() => Math.random() * Math.PI * 2);
 
@@ -215,24 +217,31 @@ function BlockWallVertical({ position = [0, 0, 0] }) {
 	);
 }
 
-function BlockFloorEnd({ position = [0, 0, 0] }) {
+export function BlockFloorEnd({ position = [0, 0, 0] }) {
 	return (
 		<>
 			<group position={position}>
-				<mesh
-					geometry={boxGeometry}
-					material={floorBlockTwo}
-					position={[0, 0.1, 0]}
-					scale={[4, 0.2, 4]}
-					castShadow
-					receiveShadow
-				></mesh>
+				<RigidBody type='fixed' friction={0} restitution={0.2}>
+					<mesh
+						geometry={boxGeometry}
+						material={floorBlockTwo}
+						position={[0, 0.1, 0]}
+						scale={[4, 0.2, 4]}
+						castShadow
+						receiveShadow
+					></mesh>
+				</RigidBody>
 			</group>
 		</>
 	);
 }
 
-function BlockFloorPodium({ position = [0, 0, 0] }) {
+export function BlockFloorPodium({ position = [0, 0, 0] }) {
+	const creature = useGLTF('./creature.glb');
+	creature.scene.children.forEach((mesh) => {
+		mesh.castShadow = true;
+	});
+
 	return (
 		<>
 			<group position={position}>
@@ -240,26 +249,51 @@ function BlockFloorPodium({ position = [0, 0, 0] }) {
 					geometry={boxGeometry}
 					material={podiumMaterial}
 					position={[0, 0.3, 0]}
-					scale={[4, 0.3, 4]}
-					castShadow
+					scale={[4, 0.4, 4]}
 					receiveShadow
 				></mesh>
+				<RigidBody type='fixed' castShadow>
+					<primitive
+						object={creature.scene}
+						scale={1.3}
+						rotation-y={Math.PI}
+						position-y={1.67}
+					/>
+				</RigidBody>
 			</group>
 		</>
 	);
 }
 
 //Level
-export default function Level() {
+export function Level({
+	count = 4,
+	types = [
+		BlockBarVertical,
+		BlockWallHorizontal,
+		BlockSpinner,
+		BlockWallVertical,
+	],
+}) {
+	const blocksTrapsArray = useMemo(() => {
+		const blocksTrapsArray = [];
+		for (let i = 0; i < count; i++) {
+			const type = types[Math.floor(Math.random() * types.length)];
+			blocksTrapsArray.push(type);
+		}
+		return blocksTrapsArray;
+	}, [count, types]);
+
+	console.log(blocksTrapsArray);
+
 	return (
 		<>
 			<BlockFloor position={[0, 0, 0]} />
-			<BlockBarVertical position={[0, 0, 4]} />
-			<BlockWallHorizontal position={[0, 0, 8]} />
-			<BlockSpinner position={[0, 0, 12]} />
-			<BlockWallVertical position={[0, 0, 16]} />
-			<BlockFloorEnd position={[0, 0, 20]} />
-			<BlockFloorPodium position={[0, 0, 24]} />
+			{blocksTrapsArray.map((Block, index) => (
+				<Block key={index} position={[0, 0, (index + 1) * 4]} />
+			))}
+			<BlockFloorEnd position={[0, 0, (count + 1) * 4]} />
+			<BlockFloorPodium position={[0, 0, (count + 2) * 4]} />
 		</>
 	);
 }
