@@ -11,7 +11,7 @@ const floorBlockTwo = new THREE.MeshStandardMaterial({ color: '#eee4e4' });
 const obsticleMaterialOne = new THREE.MeshStandardMaterial({
 	color: '#24c449',
 });
-const obsticleMaterialTwo = new THREE.MeshStandardMaterial({
+const podiumMaterial = new THREE.MeshStandardMaterial({
 	color: '#ed671a',
 });
 
@@ -35,6 +35,50 @@ function BlockFloor({ position = [0, 0, 0] }) {
 					castShadow
 					receiveShadow
 				></mesh>
+			</group>
+		</>
+	);
+}
+
+function BlockBarVertical({ position = [0, 0, 0] }) {
+	const obsticle = useRef();
+	const [timeOffset] = useState(() => Math.random() * Math.PI * 2);
+
+	useFrame((state) => {
+		const time = state.clock.elapsedTime;
+		const y = Math.sin(time + timeOffset) + 1.15;
+		obsticle.current.setNextKinematicTranslation({
+			x: position[0],
+			y: position[1] + y,
+			z: position[2],
+		});
+	});
+
+	return (
+		<>
+			<group position={position}>
+				<mesh
+					geometry={boxGeometry}
+					receiveShadow
+					position={[0, -0.1, 0]}
+					scale={[4, 0.2, 4]}
+					material={floorBlockTwo}
+				></mesh>
+				<RigidBody
+					ref={obsticle}
+					type='kinematicPosition'
+					position={[0, 0.3, 0]}
+					restitution={0.2}
+					friction={0.1}
+				>
+					<mesh
+						geometry={boxGeometry}
+						material={obsticleMaterialOne}
+						scale={[3.7, 0.2, 0.2]}
+						castShadow
+						receiveShadow
+					/>
+				</RigidBody>
 			</group>
 		</>
 	);
@@ -149,7 +193,7 @@ function BlockWallVertical({ position = [0, 0, 0] }) {
 					receiveShadow
 					position={[0, -0.1, 0]}
 					scale={[4, 0.2, 4]}
-					material={floorBlockTwo}
+					material={floorBlockOne}
 				></mesh>
 				<RigidBody
 					ref={obsticle}
@@ -171,15 +215,51 @@ function BlockWallVertical({ position = [0, 0, 0] }) {
 	);
 }
 
+function BlockFloorEnd({ position = [0, 0, 0] }) {
+	return (
+		<>
+			<group position={position}>
+				<mesh
+					geometry={boxGeometry}
+					material={floorBlockTwo}
+					position={[0, 0.1, 0]}
+					scale={[4, 0.2, 4]}
+					castShadow
+					receiveShadow
+				></mesh>
+			</group>
+		</>
+	);
+}
+
+function BlockFloorPodium({ position = [0, 0, 0] }) {
+	return (
+		<>
+			<group position={position}>
+				<mesh
+					geometry={boxGeometry}
+					material={podiumMaterial}
+					position={[0, 0.3, 0]}
+					scale={[4, 0.3, 4]}
+					castShadow
+					receiveShadow
+				></mesh>
+			</group>
+		</>
+	);
+}
+
 //Level
 export default function Level() {
 	return (
 		<>
 			<BlockFloor position={[0, 0, 0]} />
-			<BlockSpinner position={[0, 0, 4]} />
+			<BlockBarVertical position={[0, 0, 4]} />
 			<BlockWallHorizontal position={[0, 0, 8]} />
-			<BlockWallVertical position={[0, 0, 12]} />
-			<BlockFloor position={[0, 0, 16]} />
+			<BlockSpinner position={[0, 0, 12]} />
+			<BlockWallVertical position={[0, 0, 16]} />
+			<BlockFloorEnd position={[0, 0, 20]} />
+			<BlockFloorPodium position={[0, 0, 24]} />
 		</>
 	);
 }
