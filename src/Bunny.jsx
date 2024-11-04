@@ -1,11 +1,9 @@
 import { useAnimations, useGLTF } from '@react-three/drei';
-import { useLoader } from '@react-three/fiber';
-import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 import { useEffect } from 'react';
 import { useControls } from 'leva';
 
 export default function Bunny() {
-	const bunny = useLoader(GLTFLoader, './Bunny.gltf');
+	const bunny = useGLTF('./bunny.glb');
 	const animations = useAnimations(bunny.animations, bunny.scene);
 
 	const { animationName } = useControls({
