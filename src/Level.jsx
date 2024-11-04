@@ -21,7 +21,7 @@ const podiumMaterial = new THREE.MeshStandardMaterial({
 // 	color: '#1416b9',
 // });
 const wallMaterial = new THREE.MeshStandardMaterial({
-	color: '#583555',
+	color: '#e194dc',
 });
 
 //Floor
@@ -76,7 +76,7 @@ export function BlockBarVertical({ position = [0, 0, 0] }) {
 					<mesh
 						geometry={boxGeometry}
 						material={obsticleMaterialOne}
-						scale={[3.7, 0.2, 0.2]}
+						scale={[3.5, 0.2, 0.2]}
 						castShadow
 						receiveShadow
 					/>
@@ -119,7 +119,7 @@ export function BlockSpinner({ position = [0, 0, 0] }) {
 					<mesh
 						geometry={boxGeometry}
 						material={obsticleMaterialOne}
-						scale={[3.7, 0.2, 0.2]}
+						scale={[3.5, 0.2, 0.2]}
 						castShadow
 						receiveShadow
 					/>
@@ -135,7 +135,7 @@ export function BlockWallHorizontal({ position = [0, 0, 0] }) {
 
 	useFrame((state) => {
 		const time = state.clock.elapsedTime;
-		const x = -Math.sin(time + timeOffset);
+		const x = -Math.sin(time + timeOffset) * 0.9;
 		obsticle.current.setNextKinematicTranslation({
 			x: position[0] + x,
 			y: position[1] + 1,
@@ -163,7 +163,7 @@ export function BlockWallHorizontal({ position = [0, 0, 0] }) {
 					<mesh
 						geometry={boxGeometry}
 						material={obsticleMaterialOne}
-						scale={[1.85, 1.85, 0.2]}
+						scale={[1.7, 1.7, 0.2]}
 						castShadow
 						receiveShadow
 					/>
@@ -207,7 +207,7 @@ export function BlockWallVertical({ position = [0, 0, 0] }) {
 					<mesh
 						geometry={boxGeometry}
 						material={obsticleMaterialOne}
-						scale={[3.7, 1.85, 0.2]}
+						scale={[3.5, 1.7, 0.2]}
 						castShadow
 						receiveShadow
 					/>
@@ -265,9 +265,43 @@ export function BlockFloorPodium({ position = [0, 0, 0] }) {
 	);
 }
 
+function Walls({ length = 1 }) {
+	return (
+		<>
+			<group rotation-x={-0.005}>
+				<RigidBody type='fixed'>
+					<mesh
+						geometry={boxGeometry}
+						material={wallMaterial}
+						position={[2.1, 0.9, length * 2 - 2]}
+						scale={[0.2, 2.1, 4 * length - 0.1]}
+						rotation-z={-0.2}
+						castShadow
+					></mesh>
+					<mesh
+						geometry={boxGeometry}
+						material={wallMaterial}
+						position={[-2.1, 0.9, length * 2 - 2]}
+						scale={[0.2, 2.1, 4 * length - 0.1]}
+						rotation-z={0.2}
+						receiveShadow
+					></mesh>
+					<mesh
+						geometry={boxGeometry}
+						material={wallMaterial}
+						position={[0, 0.9, length * 4 - 2.1]}
+						scale={[4.6, 2.07, 0.2]}
+						receiveShadow
+					></mesh>
+				</RigidBody>
+			</group>
+		</>
+	);
+}
+
 //Level
 export function Level({
-	count = 4,
+	trapsCount = 4,
 	types = [
 		BlockBarVertical,
 		BlockWallHorizontal,
@@ -277,12 +311,12 @@ export function Level({
 }) {
 	const blocksTrapsArray = useMemo(() => {
 		const blocksTrapsArray = [];
-		for (let i = 0; i < count; i++) {
+		for (let i = 0; i < trapsCount; i++) {
 			const type = types[Math.floor(Math.random() * types.length)];
 			blocksTrapsArray.push(type);
 		}
 		return blocksTrapsArray;
-	}, [count, types]);
+	}, [trapsCount, types]);
 
 	console.log(blocksTrapsArray);
 
@@ -292,8 +326,9 @@ export function Level({
 			{blocksTrapsArray.map((Block, index) => (
 				<Block key={index} position={[0, 0, (index + 1) * 4]} />
 			))}
-			<BlockFloorEnd position={[0, 0, (count + 1) * 4]} />
-			<BlockFloorPodium position={[0, 0, (count + 2) * 4]} />
+			<BlockFloorEnd position={[0, 0, (trapsCount + 1) * 4]} />
+			<BlockFloorPodium position={[0, 0, (trapsCount + 2) * 4]} />
+			<Walls length={trapsCount + 3} />
 		</>
 	);
 }
