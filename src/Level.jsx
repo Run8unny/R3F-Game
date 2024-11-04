@@ -1,6 +1,6 @@
 import { Instance } from '@react-three/drei';
 import { useFrame } from '@react-three/fiber';
-import { RigidBody } from '@react-three/rapier';
+import { CuboidCollider, RigidBody } from '@react-three/rapier';
 import { useMemo, useRef, useState } from 'react';
 import * as THREE from 'three';
 import { useGLTF } from '@react-three/drei';
@@ -269,7 +269,7 @@ function Walls({ length = 1 }) {
 	return (
 		<>
 			<group rotation-x={-0.005}>
-				<RigidBody type='fixed'>
+				<RigidBody type='fixed' restitution={0.2} friction={0}>
 					<mesh
 						geometry={boxGeometry}
 						material={wallMaterial}
@@ -293,6 +293,12 @@ function Walls({ length = 1 }) {
 						scale={[4.6, 2.07, 0.2]}
 						receiveShadow
 					></mesh>
+					<CuboidCollider
+						args={[2, 0.1, 2 * length]}
+						position={[0, -0.1, length * 2 - 2]}
+						restitution={0.2}
+						friction={1}
+					/>
 				</RigidBody>
 			</group>
 		</>
