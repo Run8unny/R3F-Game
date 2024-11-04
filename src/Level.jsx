@@ -237,7 +237,7 @@ export function BlockFloorEnd({ position = [0, 0, 0] }) {
 }
 
 export function BlockFloorPodium({ position = [0, 0, 0] }) {
-	const creature = useGLTF('./creature.glb');
+	const creature = useGLTF('./cup.glb');
 	creature.scene.children.forEach((mesh) => {
 		mesh.castShadow = true;
 	});
@@ -255,7 +255,7 @@ export function BlockFloorPodium({ position = [0, 0, 0] }) {
 				<RigidBody type='fixed' castShadow>
 					<primitive
 						object={creature.scene}
-						scale={1.3}
+						scale={1.4}
 						rotation-y={Math.PI}
 						position-y={1.67}
 					/>
