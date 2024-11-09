@@ -1,6 +1,9 @@
 import { useAnimations, useGLTF } from '@react-three/drei';
 import { useEffect } from 'react';
 import { useControls } from 'leva';
+import { RigidBody } from '@react-three/rapier';
+import { useFrame } from '@react-three/fiber';
+import { useKeyboardControls } from '@react-three/drei';
 
 export default function Bunny() {
 	const bunny = useGLTF('./bunny.glb');
@@ -19,5 +22,23 @@ export default function Bunny() {
 		};
 	}, [animationName]);
 
-	return <primitive object={bunny.scene} scale={0.7} position={[0, 0, 0]} />;
+	useFrame(() => {});
+
+	return (
+		<RigidBody
+			type='dynamic'
+			colliders='trimesh'
+			friction={1}
+			restitution={0.2}
+			canSleep={false}
+		>
+			<primitive
+				castShadow
+				flatShading
+				object={bunny.scene}
+				scale={0.5}
+				position={[0, 0, 0]}
+			/>
+		</RigidBody>
+	);
 }
