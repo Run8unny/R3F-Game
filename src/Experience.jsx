@@ -4,16 +4,17 @@ import Bunny from './Bunny.jsx';
 import { Perf } from 'r3f-perf';
 import { Level } from './Level.jsx';
 import { Physics } from '@react-three/rapier';
+import BunnyController from './BunnyController.jsx';
 
 export default function Experience() {
 	return (
 		<>
 			<Perf position='top-left' />
-			<OrbitControls makeDefault />
+			{/* <OrbitControls makeDefault /> */}
 			<Lights />
-			<Physics debug>
+			<Physics debug={false}>
 				<Level />
-				<Bunny />
+				<BunnyController />
 			</Physics>
 		</>
 	);
