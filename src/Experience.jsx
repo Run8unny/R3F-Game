@@ -10,7 +10,7 @@ export default function Experience() {
 	return (
 		<>
 			<Perf position='top-left' />
-			{/* <OrbitControls makeDefault /> */}
+			<OrbitControls makeDefault />
 			<Lights />
 			<Physics debug={false}>
 				<Level />
