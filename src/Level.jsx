@@ -289,14 +289,14 @@ export function BlockFloorPodium({ position = [0, 0, 0] }) {
 	return (
 		<>
 			<group position={position}>
-				<mesh
-					geometry={boxGeometry}
-					material={podiumMaterial}
-					position={[0, 0.3, 0]}
-					scale={[4, 0.4, 4]}
-					receiveShadow
-				></mesh>
-				<RigidBody type='fixed' castShadow>
+				<RigidBody type='fixed' friction={0} restitution={0.2} castShadow>
+					<mesh
+						geometry={boxGeometry}
+						material={podiumMaterial}
+						position={[0, 0.25, 0]}
+						scale={[4, 0.4, 4]}
+						receiveShadow
+					/>
 					<primitive
 						object={creature.scene}
 						scale={1.4}
@@ -330,13 +330,13 @@ function Walls({ length = 1 }) {
 						rotation-z={0.2}
 						receiveShadow
 					></mesh>
-					<mesh
+					{/* <mesh
 						geometry={boxGeometry}
 						material={wallMaterial}
 						position={[0, 0, length * 4 - 2.1]}
 						scale={[4.6, 2.07, 0.2]}
 						receiveShadow
-					></mesh>
+					></mesh> */}
 					<CuboidCollider
 						args={[2, 0.1, 2 * length]}
 						position={[0, -0.1, length * 2 - 2]}
