@@ -1,4 +1,4 @@
-import { Instance } from '@react-three/drei';
+import { Instance, useTexture } from '@react-three/drei';
 import { useFrame } from '@react-three/fiber';
 import { CuboidCollider, RigidBody } from '@react-three/rapier';
 import { useMemo, useRef, useState } from 'react';
@@ -6,7 +6,7 @@ import * as THREE from 'three';
 import { useGLTF } from '@react-three/drei';
 
 //Geometry
-const boxGeometry = new THREE.BoxGeometry(1, 1, 1);
+const boxGeometry = new THREE.BoxGeometry(1, 1, 1, 10, 10);
 //Materials
 const floorBlockOne = new THREE.MeshStandardMaterial({ color: '#0c0c0c' });
 const floorBlockTwo = new THREE.MeshStandardMaterial({ color: '#eee4e4' });
@@ -23,9 +23,41 @@ const podiumMaterial = new THREE.MeshStandardMaterial({
 const wallMaterial = new THREE.MeshStandardMaterial({
 	color: '#e194dc',
 });
+//Textures
 
 //Floor
 export function BlockFloor({ position = [0, 0, 0] }) {
+	// const [
+	// 	colorMap,
+	// 	displacementMap,
+	// 	normalMap,
+	// 	roughnessMap,
+	// 	metalnessMap,
+	// 	aoMap,
+	// ] = useTexture([
+	// 	'./textures/cliff_side_diff_1k.webp',
+	// 	'./textures/cliff_side_disp_1k.webp',
+	// 	'./textures/cliff_side_nor_gl_1k.webp',
+	// 	'./textures/cliff_side_arm_1k.webp',
+	// 	'./textures/cliff_side_arm_1k.webp',
+	// 	'./textures/cliff_side_arm_1k.webp',
+	// ]);
+	// colorMap.repeat.set(2, 2);
+	// colorMap.wrapS = THREE.RepeatWrapping;
+	// colorMap.wrapT = THREE.RepeatWrapping;
+	// colorMap.colorSpace = THREE.SRGBColorSpace;
+	// displacementMap.repeat.set(2, 2);
+	// displacementMap.wrapS = THREE.RepeatWrapping;
+	// displacementMap.wrapT = THREE.RepeatWrapping;
+	// normalMap.repeat.set(2, 2);
+	// normalMap.wrapS = THREE.RepeatWrapping;
+	// normalMap.wrapT = THREE.RepeatWrapping;
+	// roughnessMap.repeat.set(2, 2);
+	// roughnessMap.wrapS = THREE.RepeatWrapping;
+	// roughnessMap.wrapT = THREE.RepeatWrapping;
+	// aoMap.repeat.set(2, 2);
+	// aoMap.wrapS = THREE.RepeatWrapping;
+	// aoMap.wrapT = THREE.RepeatWrapping;
 	return (
 		<>
 			<group position={position}>
@@ -36,7 +68,19 @@ export function BlockFloor({ position = [0, 0, 0] }) {
 					scale={[4, 0.2, 4]}
 					castShadow
 					receiveShadow
-				></mesh>
+				>
+					{/* <meshStandardMaterial
+						map={colorMap}
+						displacementMap={displacementMap}
+						displacementScale={0.3}
+						displacementBias={0.2}
+						normalMap={normalMap}
+						roughnessMap={roughnessMap}
+						metalness={metalnessMap}
+						aoMap={aoMap}
+						transparent={true}
+					/> */}
+				</mesh>
 			</group>
 		</>
 	);
@@ -79,7 +123,7 @@ export function BlockBarVertical({ position = [0, 0, 0] }) {
 						scale={[3.5, 0.2, 0.2]}
 						castShadow
 						receiveShadow
-					/>
+					></mesh>
 				</RigidBody>
 			</group>
 		</>
@@ -152,7 +196,7 @@ export function BlockWallHorizontal({ position = [0, 0, 0] }) {
 					position={[0, -0.1, 0]}
 					scale={[4, 0.2, 4]}
 					material={floorBlockOne}
-				></mesh>
+				/>
 				<RigidBody
 					ref={obsticle}
 					type='kinematicPosition'
@@ -166,7 +210,7 @@ export function BlockWallHorizontal({ position = [0, 0, 0] }) {
 						scale={[1.7, 1.7, 0.2]}
 						castShadow
 						receiveShadow
-					/>
+					></mesh>
 				</RigidBody>
 			</group>
 		</>
@@ -210,7 +254,7 @@ export function BlockWallVertical({ position = [0, 0, 0] }) {
 						scale={[3.5, 1.7, 0.2]}
 						castShadow
 						receiveShadow
-					/>
+					></mesh>
 				</RigidBody>
 			</group>
 		</>
@@ -323,8 +367,6 @@ export function Level({
 		}
 		return blocksTrapsArray;
 	}, [trapsCount, types]);
-
-	console.log(blocksTrapsArray);
 
 	return (
 		<>
