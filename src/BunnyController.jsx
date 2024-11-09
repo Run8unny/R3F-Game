@@ -98,14 +98,14 @@ export default function BunnyController() {
 				rotationTarget.current += 0.5 * movement.x;
 			}
 
-			let speed = run ? 1.8 : 1.2;
+			let speed = run ? 2 : 1.2;
 
 			if (movement.x !== 0 || movement.z !== 0) {
 				bunnyRotationTarget.current = Math.atan2(movement.x, movement.z);
 				velocity.x = Math.sin(rotationTarget.current) * speed;
 				velocity.z = Math.cos(rotationTarget.current) * speed;
 				velocity.z = speed * movement.z;
-				if (speed === 1.8) {
+				if (speed === 2) {
 					setAnimation('Run');
 				} else {
 					setAnimation('Walk');
