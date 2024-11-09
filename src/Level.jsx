@@ -317,7 +317,7 @@ function Walls({ length = 1 }) {
 					<mesh
 						geometry={boxGeometry}
 						material={wallMaterial}
-						position={[2.1, 0.9, length * 2 - 2]}
+						position={[2.1, 0, length * 2 - 2]}
 						scale={[0.2, 2.1, 4 * length - 0.1]}
 						rotation-z={-0.2}
 						castShadow
@@ -325,7 +325,7 @@ function Walls({ length = 1 }) {
 					<mesh
 						geometry={boxGeometry}
 						material={wallMaterial}
-						position={[-2.1, 0.9, length * 2 - 2]}
+						position={[-2.1, 0, length * 2 - 2]}
 						scale={[0.2, 2.1, 4 * length - 0.1]}
 						rotation-z={0.2}
 						receiveShadow
@@ -333,7 +333,7 @@ function Walls({ length = 1 }) {
 					<mesh
 						geometry={boxGeometry}
 						material={wallMaterial}
-						position={[0, 0.9, length * 4 - 2.1]}
+						position={[0, 0, length * 4 - 2.1]}
 						scale={[4.6, 2.07, 0.2]}
 						receiveShadow
 					></mesh>
@@ -370,12 +370,12 @@ export function Level({
 
 	return (
 		<>
-			<BlockFloor position={[0, 0, 0]} />
+			<BlockFloor position={[0, -1, 0]} />
 			{blocksTrapsArray.map((Block, index) => (
-				<Block key={index} position={[0, 0, (index + 1) * 4]} />
+				<Block key={index} position={[0, -1, (index + 1) * 4]} />
 			))}
-			<BlockFloorEnd position={[0, 0, (trapsCount + 1) * 4]} />
-			<BlockFloorPodium position={[0, 0, (trapsCount + 2) * 4]} />
+			<BlockFloorEnd position={[0, -1, (trapsCount + 1) * 4]} />
+			<BlockFloorPodium position={[0, -1, (trapsCount + 2) * 4]} />
 			<Walls length={trapsCount + 3} />
 		</>
 	);
