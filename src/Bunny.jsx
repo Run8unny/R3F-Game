@@ -1,44 +1,27 @@
 import { useAnimations, useGLTF } from '@react-three/drei';
-import { useEffect } from 'react';
-import { useControls } from 'leva';
-import { RigidBody } from '@react-three/rapier';
-import { useFrame } from '@react-three/fiber';
-import { useKeyboardControls } from '@react-three/drei';
+import { useEffect, useRef } from 'react';
 
-export default function Bunny() {
+export default function Bunny({ animation, ...props }) {
+	const group = useRef();
+
 	const bunny = useGLTF('./bunny.glb');
-	const animations = useAnimations(bunny.animations, bunny.scene);
-
-	const { animationName } = useControls({
-		animationName: { options: animations.names },
+	bunny.scene.children.forEach((mesh) => {
+		mesh.castShadow = true;
 	});
 
+	const { actions } = useAnimations(bunny.animations, bunny.scene);
+
 	useEffect(() => {
-		const action = animations.actions[animationName];
-		action.reset().fadeIn(0.5).play();
+		actions[animation]?.reset().fadeIn(0.5).play();
 
 		return () => {
-			action.fadeOut(0.5);
+			actions?.[animation]?.fadeOut(0.5);
 		};
-	}, [animationName]);
-
-	useFrame(() => {});
+	}, [animation]);
 
 	return (
-		<RigidBody
-			type='dynamic'
-			colliders='trimesh'
-			friction={1}
-			restitution={0.2}
-			canSleep={false}
-		>
-			<primitive
-				castShadow
-				flatShading
-				object={bunny.scene}
-				scale={0.5}
-				position={[0, 0, 0]}
-			/>
-		</RigidBody>
+		<group ref={group} {...props} dispose={null}>
+			<primitive castShadow flatShading object={bunny.scene} />
+		</group>
 	);
 }
