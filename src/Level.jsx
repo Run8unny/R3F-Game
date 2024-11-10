@@ -14,14 +14,14 @@ const obsticleMaterialOne = new THREE.MeshStandardMaterial({
 	color: '#24c449',
 });
 const podiumMaterial = new THREE.MeshStandardMaterial({
-	color: '#ed671a',
+	color: '#e05b0f',
 });
 
 // const obsticleMaterialThree = new THREE.MeshStandardMaterial({
 // 	color: '#1416b9',
 // });
 const wallMaterial = new THREE.MeshStandardMaterial({
-	color: '#e194dc',
+	color: '#d765cf',
 });
 //Textures
 
@@ -456,7 +456,7 @@ export function Level({
 		<>
 			<BlockFloor position={[0, -1, 0]} />
 			{blocksTrapsArray.map((Block, index) => (
-				<Block key={index} position={[0, -1, (index + 1) * 4]} />
+				<Block key={index} position={[0, -1, (index + 1.001) * 4]} />
 			))}
 			<BlockFloorEnd position={[0, -1, (trapsCount + 1) * 4]} />
 			<BlockFloorPodium position={[0, -1, (trapsCount + 2) * 4]} />

@@ -30,35 +30,25 @@ const lerpAngle = (start, end, t) => {
 
 export default function BunnyController() {
 	const body = useRef();
-	const container = useRef();
 	const bunny = useRef();
 	const rotationTarget = useRef(0);
 	const bunnyRotationTarget = useRef(0);
 	const [subscribeKeys, getKeys] = useKeyboardControls();
 	const { rapier, world } = useRapier();
 	const [animation, setAnimation] = useState('Wave');
-
-	// const { WALK_SPEED, RUN_SPEED, ROTATION_SPEED } = useControls(
-	// 	'Character Control',
-	// 	{
-	// 		WALK_SPEED: { value: 1.2, min: 0.1, max: 4, step: 0.1 },
-	// 		RUN_SPEED: { value: 1.8, min: 0.2, max: 12, step: 0.1 },
-	// 		ROTATION_SPEED: {
-	// 			value: degToRad(0.4),
-	// 			min: degToRad(0.1),
-	// 			max: degToRad(5),
-	// 			step: degToRad(0.1),
-	// 		},
-	// 	}
-	// );
+	const [smoothedCameraPosition] = useState(
+		() => new THREE.Vector3(-15, 15, -15)
+	);
+	const [smoothedCameraTarget] = useState(() => new THREE.Vector3());
 
 	const jump = () => {
 		const origin = body.current.translation();
-		origin.y -= 0.2;
+		origin.y -= 0.5;
 		const direction = { x: 0, y: -1, z: 0 };
 		const ray = new rapier.Ray(origin, direction);
-		const hit = world.castRay(ray, 10, true);
-		if (hit.timeOfImpact < 0.6) body.current.applyImpulse({ x: 0, y: 3, z: 0 });
+		const hit = world.castRay(ray, 5, true);
+		if (hit.timeOfImpact < 0.2)
+			body.current.applyImpulse({ x: 0, y: 2.5, z: 0 });
 		setAnimation('Jump');
 	};
 
@@ -98,13 +88,13 @@ export default function BunnyController() {
 				rotationTarget.current += 0.3 * movement.x;
 			}
 
-			let speed = run ? 2 : 1.2;
+			let speed = run ? 2.2 : 1.2;
 
 			if (movement.x !== 0 || movement.z !== 0) {
 				bunnyRotationTarget.current = Math.atan2(movement.x, movement.z);
 				velocity.x = speed * movement.x;
 				velocity.z = speed * movement.z;
-				if (speed === 2) {
+				if (speed === 2.2) {
 					setAnimation('Run');
 				} else {
 					setAnimation('Walk');
@@ -126,12 +116,20 @@ export default function BunnyController() {
 
 		const bodyPosition = body.current.translation();
 		const cameraPosition = new THREE.Vector3();
-		cameraPosition.z += -0.25;
-		cameraPosition.y += 5.65;
-
+		cameraPosition.copy(bodyPosition);
+		cameraPosition.z -= 5;
+		cameraPosition.y += 2;
 		const cameraTarget = new THREE.Vector3();
-		state.camera.lookAt(cameraTarget);
+		cameraTarget.copy(bodyPosition);
+		cameraTarget.y += 0.5;
+
+		smoothedCameraPosition.lerp(cameraPosition, 5 * delta);
+		smoothedCameraTarget.lerp(cameraTarget, 5 * delta);
+
+		state.camera.position.copy(smoothedCameraPosition);
+		state.camera.lookAt(smoothedCameraTarget);
 	});
+
 	return (
 		<RigidBody
 			ref={body}
