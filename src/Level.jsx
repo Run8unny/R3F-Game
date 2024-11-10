@@ -8,7 +8,7 @@ import { useGLTF } from '@react-three/drei';
 //Geometry
 const boxGeometry = new THREE.BoxGeometry(1, 1, 1, 10, 10);
 //Materials
-const floorBlockOne = new THREE.MeshStandardMaterial({ color: '#0c0c0c' });
+const floorBlockOne = new THREE.MeshStandardMaterial({ color: '#121111' });
 const floorBlockTwo = new THREE.MeshStandardMaterial({ color: '#eee4e4' });
 const obsticleMaterialOne = new THREE.MeshStandardMaterial({
 	color: '#24c449',
@@ -27,60 +27,41 @@ const wallMaterial = new THREE.MeshStandardMaterial({
 
 //Floor
 export function BlockFloor({ position = [0, 0, 0] }) {
-	// const [
-	// 	colorMap,
-	// 	displacementMap,
-	// 	normalMap,
-	// 	roughnessMap,
-	// 	metalnessMap,
-	// 	aoMap,
-	// ] = useTexture([
-	// 	'./textures/cliff_side_diff_1k.webp',
-	// 	'./textures/cliff_side_disp_1k.webp',
-	// 	'./textures/cliff_side_nor_gl_1k.webp',
-	// 	'./textures/cliff_side_arm_1k.webp',
-	// 	'./textures/cliff_side_arm_1k.webp',
-	// 	'./textures/cliff_side_arm_1k.webp',
-	// ]);
-	// colorMap.repeat.set(2, 2);
-	// colorMap.wrapS = THREE.RepeatWrapping;
-	// colorMap.wrapT = THREE.RepeatWrapping;
-	// colorMap.colorSpace = THREE.SRGBColorSpace;
-	// displacementMap.repeat.set(2, 2);
-	// displacementMap.wrapS = THREE.RepeatWrapping;
-	// displacementMap.wrapT = THREE.RepeatWrapping;
-	// normalMap.repeat.set(2, 2);
-	// normalMap.wrapS = THREE.RepeatWrapping;
-	// normalMap.wrapT = THREE.RepeatWrapping;
-	// roughnessMap.repeat.set(2, 2);
-	// roughnessMap.wrapS = THREE.RepeatWrapping;
-	// roughnessMap.wrapT = THREE.RepeatWrapping;
-	// aoMap.repeat.set(2, 2);
-	// aoMap.wrapS = THREE.RepeatWrapping;
-	// aoMap.wrapT = THREE.RepeatWrapping;
 	return (
 		<>
-			<group position={position}>
-				<mesh
-					geometry={boxGeometry}
-					material={floorBlockOne}
-					position={[0, -0.1, 0]}
-					scale={[4, 0.2, 4]}
-					castShadow
-					receiveShadow
-				>
-					{/* <meshStandardMaterial
-						map={colorMap}
-						displacementMap={displacementMap}
-						displacementScale={0.3}
-						displacementBias={0.2}
-						normalMap={normalMap}
-						roughnessMap={roughnessMap}
-						metalness={metalnessMap}
-						aoMap={aoMap}
-						transparent={true}
-					/> */}
-				</mesh>
+			<group position={position} rotation-x={-0.005}>
+				<RigidBody type='fixed' restitution={0.2} friction={0}>
+					<mesh
+						geometry={boxGeometry}
+						material={floorBlockTwo}
+						position={[4, -0.1, 0]}
+						scale={[4, 0.2, 4]}
+						castShadow
+						receiveShadow
+					></mesh>
+					<mesh
+						geometry={boxGeometry}
+						material={floorBlockOne}
+						position={[0, -0.1, 0]}
+						scale={[4, 0.2, 4]}
+						castShadow
+						receiveShadow
+					></mesh>
+					<mesh
+						geometry={boxGeometry}
+						material={floorBlockTwo}
+						position={[-4, -0.1, 0]}
+						scale={[4, 0.2, 4]}
+						castShadow
+						receiveShadow
+					></mesh>
+				</RigidBody>
+				<CuboidCollider
+					args={[2, 0.1, 2 * length]}
+					position={[0, -0.1, length * 2 - 2]}
+					restitution={0.2}
+					friction={1}
+				/>
 			</group>
 		</>
 	);
@@ -105,11 +86,30 @@ export function BlockBarVertical({ position = [0, 0, 0] }) {
 			<group position={position}>
 				<mesh
 					geometry={boxGeometry}
-					receiveShadow
-					position={[0, -0.1, 0]}
+					material={floorBlockOne}
+					position={[-4, -0.1, 0]}
 					scale={[4, 0.2, 4]}
-					material={floorBlockTwo}
+					castShadow
+					receiveShadow
 				></mesh>
+				<RigidBody type='fixed' restitution={0.2} friction={0}>
+					<mesh
+						geometry={boxGeometry}
+						receiveShadow
+						position={[0, -0.1, 0]}
+						scale={[4, 0.2, 4]}
+						material={floorBlockTwo}
+					></mesh>
+				</RigidBody>
+				<mesh
+					geometry={boxGeometry}
+					material={floorBlockOne}
+					position={[4, -0.1, 0]}
+					scale={[4, 0.2, 4]}
+					castShadow
+					receiveShadow
+				></mesh>
+
 				<RigidBody
 					ref={obsticle}
 					type='kinematicPosition'
@@ -148,10 +148,26 @@ export function BlockSpinner({ position = [0, 0, 0] }) {
 			<group position={position}>
 				<mesh
 					geometry={boxGeometry}
+					material={floorBlockOne}
+					position={[-4, -0.1, 0]}
+					scale={[4, 0.2, 4]}
+					castShadow
+					receiveShadow
+				></mesh>
+				<mesh
+					geometry={boxGeometry}
 					receiveShadow
 					position={[0, -0.1, 0]}
 					scale={[4, 0.2, 4]}
 					material={floorBlockTwo}
+				></mesh>
+				<mesh
+					geometry={boxGeometry}
+					material={floorBlockOne}
+					position={[4, -0.1, 0]}
+					scale={[4, 0.2, 4]}
+					castShadow
+					receiveShadow
 				></mesh>
 				<RigidBody
 					ref={obsticle}
@@ -192,11 +208,29 @@ export function BlockWallHorizontal({ position = [0, 0, 0] }) {
 			<group position={position}>
 				<mesh
 					geometry={boxGeometry}
-					receiveShadow
-					position={[0, -0.1, 0]}
+					material={floorBlockTwo}
+					position={[4, -0.1, 0]}
 					scale={[4, 0.2, 4]}
-					material={floorBlockOne}
-				/>
+					castShadow
+					receiveShadow
+				></mesh>
+				<RigidBody type='fixed' restitution={0.2} friction={0}>
+					<mesh
+						geometry={boxGeometry}
+						receiveShadow
+						position={[0, -0.1, 0]}
+						scale={[4, 0.2, 4]}
+						material={floorBlockOne}
+					/>
+				</RigidBody>
+				<mesh
+					geometry={boxGeometry}
+					material={floorBlockTwo}
+					position={[-4, -0.1, 0]}
+					scale={[4, 0.2, 4]}
+					castShadow
+					receiveShadow
+				></mesh>
 				<RigidBody
 					ref={obsticle}
 					type='kinematicPosition'
@@ -236,10 +270,28 @@ export function BlockWallVertical({ position = [0, 0, 0] }) {
 			<group position={position}>
 				<mesh
 					geometry={boxGeometry}
-					receiveShadow
-					position={[0, -0.1, 0]}
+					material={floorBlockTwo}
+					position={[-4, -0.1, 0]}
 					scale={[4, 0.2, 4]}
-					material={floorBlockOne}
+					castShadow
+					receiveShadow
+				></mesh>
+				<RigidBody type='fixed' restitution={0.2} friction={0}>
+					<mesh
+						geometry={boxGeometry}
+						receiveShadow
+						position={[0, -0.1, 0]}
+						scale={[4, 0.2, 4]}
+						material={floorBlockOne}
+					></mesh>
+				</RigidBody>
+				<mesh
+					geometry={boxGeometry}
+					material={floorBlockTwo}
+					position={[4, -0.1, 0]}
+					scale={[4, 0.2, 4]}
+					castShadow
+					receiveShadow
 				></mesh>
 				<RigidBody
 					ref={obsticle}
@@ -268,8 +320,24 @@ export function BlockFloorEnd({ position = [0, 0, 0] }) {
 				<RigidBody type='fixed' friction={0} restitution={0.2}>
 					<mesh
 						geometry={boxGeometry}
+						material={floorBlockOne}
+						position={[-4, -0.1, 0]}
+						scale={[4, 0.2, 4]}
+						castShadow
+						receiveShadow
+					></mesh>
+					<mesh
+						geometry={boxGeometry}
 						material={floorBlockTwo}
 						position={[0, 0.1, 0]}
+						scale={[4, 0.2, 4]}
+						castShadow
+						receiveShadow
+					></mesh>
+					<mesh
+						geometry={boxGeometry}
+						material={floorBlockOne}
+						position={[4, -0.1, 0]}
 						scale={[4, 0.2, 4]}
 						castShadow
 						receiveShadow
@@ -292,11 +360,27 @@ export function BlockFloorPodium({ position = [0, 0, 0] }) {
 				<RigidBody type='fixed' friction={0} restitution={0.2} castShadow>
 					<mesh
 						geometry={boxGeometry}
+						material={floorBlockTwo}
+						position={[-4, -0.1, 0]}
+						scale={[4, 0.2, 4]}
+						castShadow
+						receiveShadow
+					></mesh>
+					<mesh
+						geometry={boxGeometry}
 						material={podiumMaterial}
 						position={[0, 0.25, 0]}
 						scale={[4, 0.4, 4]}
 						receiveShadow
 					/>
+					<mesh
+						geometry={boxGeometry}
+						material={floorBlockTwo}
+						position={[4, -0.1, 0]}
+						scale={[4, 0.2, 4]}
+						castShadow
+						receiveShadow
+					></mesh>
 					<primitive
 						object={creature.scene}
 						scale={1.4}
@@ -330,13 +414,13 @@ function Walls({ length = 1 }) {
 						rotation-z={0.2}
 						receiveShadow
 					></mesh>
-					{/* <mesh
+					<mesh
 						geometry={boxGeometry}
 						material={wallMaterial}
 						position={[0, 0, length * 4 - 2.1]}
 						scale={[4.6, 2.07, 0.2]}
 						receiveShadow
-					></mesh> */}
+					></mesh>
 					<CuboidCollider
 						args={[2, 0.1, 2 * length]}
 						position={[0, -0.1, length * 2 - 2]}
@@ -376,7 +460,7 @@ export function Level({
 			))}
 			<BlockFloorEnd position={[0, -1, (trapsCount + 1) * 4]} />
 			<BlockFloorPodium position={[0, -1, (trapsCount + 2) * 4]} />
-			<Walls length={trapsCount + 3} />
+			{/* <Walls length={trapsCount + 3} /> */}
 		</>
 	);
 }

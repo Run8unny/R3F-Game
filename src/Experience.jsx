@@ -12,7 +12,7 @@ export default function Experience() {
 			<Perf position='top-left' />
 			<OrbitControls makeDefault />
 			<Lights />
-			<Physics debug={false}>
+			<Physics debug>
 				<Level />
 				<BunnyController />
 			</Physics>
