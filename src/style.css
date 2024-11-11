@@ -29,13 +29,12 @@ body,
 /* Time */
 .time {
 	position: absolute;
-	top: 15%;
+	top: 8%;
 	left: 0;
 	width: 100%;
-	color: #d765cf;
+	color: #ffffff;
 	font-size: 7vh;
 	background: #00000033;
-	padding-top: 5px;
 	text-align: center;
 }
 
@@ -50,13 +49,12 @@ body,
 	color: #ffffff;
 	font-size: 80px;
 	background: #00000033;
-	padding-top: 10px;
 	pointer-events: auto;
 	cursor: pointer;
 }
 
 .restart:hover {
-	color: #d765cf;
+	color: #28ba4a;
 }
 
 /**
@@ -64,7 +62,7 @@ body,
  */
 .controls {
 	position: absolute;
-	bottom: 10%;
+	bottom: 8%;
 	left: 0;
 	width: 100%;
 }
@@ -97,5 +95,5 @@ body,
 
 .controls .key.active {
 	background: #ffffff99;
-	border: 4px solid #d765cf;
+	border: 4px solid #ea8c56;
 }

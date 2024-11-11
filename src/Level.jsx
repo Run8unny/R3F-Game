@@ -20,9 +20,7 @@ const podiumMaterial = new THREE.MeshStandardMaterial({
 // const obsticleMaterialThree = new THREE.MeshStandardMaterial({
 // 	color: '#1416b9',
 // });
-const wallMaterial = new THREE.MeshStandardMaterial({
-	color: '#d765cf',
-});
+
 //Textures
 
 //Floor
@@ -383,15 +381,21 @@ export function BlockFloorPodium({ position = [0, 0, 0] }) {
 					></mesh>
 
 					<Float floatIntensity={0.8} floatingRange={(1, 10)}>
-						<Sparkles count={100}>
-							<primitive
-								object={creature.scene}
-								scale={1.4}
-								rotation-y={Math.PI}
-								position-y={1.67}
-							/>
-						</Sparkles>
+						<primitive
+							object={creature.scene}
+							scale={1.4}
+							rotation-y={Math.PI}
+							position-y={1.67}
+						/>
 					</Float>
+					<Sparkles
+						size={20}
+						scale={(5, 6, 5)}
+						position-y={1}
+						speed={0.2}
+						count={40}
+						color={[123, 10, 70]}
+					/>
 				</RigidBody>
 			</group>
 		</>
@@ -420,15 +424,15 @@ export function Level({
 
 	return (
 		<>
-			<BlockFloor position={[0, -1.025, 0.001]} />
+			<BlockFloor position={[0, -5.025, 0.001]} />
 			{blocksTrapsArray.map((Block, index) => (
 				<Block
 					key={index}
-					position={[0, -1 + index / 50, (index + 1) * 4.0001]}
+					position={[0, -5 + index / 50, (index + 1) * 4.0001]}
 				/>
 			))}
-			<BlockFloorEnd position={[0, -1, (trapsCount + 1) * 4.0001]} />
-			<BlockFloorPodium position={[0, -1, (trapsCount + 2) * 4.0001]} />
+			<BlockFloorEnd position={[0, -5, (trapsCount + 1) * 4.0001]} />
+			<BlockFloorPodium position={[0, -5, (trapsCount + 2) * 4.0001]} />
 		</>
 	);
 }
