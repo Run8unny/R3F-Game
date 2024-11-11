@@ -317,7 +317,7 @@ export function BlockFloorEnd({ position = [0, 0, 0] }) {
 	return (
 		<>
 			<group position={position}>
-				<RigidBody type='fixed' friction={0} restitution={0.2}>
+				<RigidBody type='fixed' friction={0} restitution={0}>
 					<mesh
 						geometry={boxGeometry}
 						material={floorBlockOne}
@@ -456,9 +456,12 @@ export function Level({
 
 	return (
 		<>
-			<BlockFloor position={[0, -1, 0.001]} />
+			<BlockFloor position={[0, -1.025, 0.001]} />
 			{blocksTrapsArray.map((Block, index) => (
-				<Block key={index} position={[0, -1, (index + 1) * 4.0001]} />
+				<Block
+					key={index}
+					position={[0, -1 + index / 50, (index + 1) * 4.0001]}
+				/>
 			))}
 			<BlockFloorEnd position={[0, -1, (trapsCount + 1) * 4.0001]} />
 			<BlockFloorPodium position={[0, -1, (trapsCount + 2) * 4.0001]} />
