@@ -9,19 +9,23 @@ export default function Interface() {
 	const rightward = useKeyboardControls((state) => state.rightward);
 	const run = useKeyboardControls((state) => state.run);
 	const jump = useKeyboardControls((state) => state.jump);
-
+	const time = useRef();
 	const restart = useGame((state) => state.restart);
 	const phase = useGame((state) => state.phase);
-
-	const time = useRef();
 
 	useEffect(() => {
 		const unsubscribeEffect = addEffect(() => {
 			const state = useGame.getState();
 			let elapsedTime = 0;
+
 			if (state.phase === 'playing') elapsedTime = Date.now() - state.startTime;
-			else if (state.phase === 'ended')
+			if (state.phase === 'ended')
 				elapsedTime = state.endTime - state.startTime;
+
+			elapsedTime /= 1000;
+			elapsedTime = elapsedTime.toFixed(2);
+
+			if (time.current) time.current.textContent = elapsedTime;
 		});
 
 		return () => {
