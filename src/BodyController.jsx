@@ -4,6 +4,7 @@ import { useFrame } from '@react-three/fiber';
 import { useKeyboardControls } from '@react-three/drei';
 import * as THREE from 'three';
 import Player from './Player';
+import useGame from './stores/useGame';
 
 const normalizeAngle = (angle) => {
 	while (angle > Math.PI) angle -= 2 * Math.PI;
@@ -38,6 +39,10 @@ export default function BodyController() {
 		() => new THREE.Vector3(-15, 15, -15)
 	);
 	const [smoothedCameraTarget] = useState(() => new THREE.Vector3());
+	const start = useGame((state) => state.start);
+	const restart = useGame((state) => state.restart);
+	const end = useGame((state) => state.end);
+	const trapsCount = useGame((state) => state.trapsCount);
 
 	const jump = () => {
 		const origin = body.current.translation();
@@ -50,15 +55,35 @@ export default function BodyController() {
 		setAnimation('Jump');
 	};
 
+	const reset = () => {
+		body.current.setTranslation({ x: 0, y: 1, z: 0 });
+		body.current.setLinvel({ x: 0, y: 0, z: 0 });
+		body.current.setAngvel({ x: 0, y: 0, z: 0 });
+	};
+
 	useEffect(() => {
+		const unsubscribeReset = useGame.subscribe(
+			(state) => state.phase,
+			(phase) => {
+				if (phase === 'ready') reset();
+			}
+		);
+
 		const unsubscribeJump = subscribeKeys(
 			(state) => state.jump,
 			(value) => {
 				if (value) jump();
 			}
 		);
+
+		const unsubscribeAny = subscribeKeys(() => {
+			start();
+		});
+
 		return () => {
 			unsubscribeJump();
+			unsubscribeAny();
+			unsubscribeReset();
 		};
 	}, []);
 
@@ -126,6 +151,10 @@ export default function BodyController() {
 
 		state.camera.position.copy(smoothedCameraPosition);
 		state.camera.lookAt(smoothedCameraTarget);
+
+		//Phases
+		if (bodyPosition.z > trapsCount * 5 + 2) end();
+		if (bodyPosition.y < -10) restart();
 	});
 
 	return (
