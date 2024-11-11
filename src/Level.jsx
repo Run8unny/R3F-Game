@@ -1,4 +1,4 @@
-import { Float, Instance, useTexture } from '@react-three/drei';
+import { Float, Instance, Sparkles, useTexture } from '@react-three/drei';
 import { useFrame } from '@react-three/fiber';
 import { CuboidCollider, RigidBody } from '@react-three/rapier';
 import { useMemo, useRef, useState } from 'react';
@@ -317,7 +317,7 @@ export function BlockFloorEnd({ position = [0, 0, 0] }) {
 	return (
 		<>
 			<group position={position}>
-				<RigidBody type='fixed' friction={0} restitution={0}>
+				<RigidBody type='fixed' friction={0} restitution={0.5}>
 					<mesh
 						geometry={boxGeometry}
 						material={floorBlockOne}
@@ -381,54 +381,17 @@ export function BlockFloorPodium({ position = [0, 0, 0] }) {
 						castShadow
 						receiveShadow
 					></mesh>
-					<Float>
-						<primitive
-							object={creature.scene}
-							scale={1.4}
-							rotation-y={Math.PI}
-							position-y={1.67}
-						/>
-					</Float>
-				</RigidBody>
-			</group>
-		</>
-	);
-}
 
-function Walls({ length = 1 }) {
-	return (
-		<>
-			<group rotation-x={-0.005}>
-				<RigidBody type='fixed' restitution={0.2} friction={0}>
-					<mesh
-						geometry={boxGeometry}
-						material={wallMaterial}
-						position={[2.1, 0, length * 2 - 2]}
-						scale={[0.2, 2.1, 4 * length - 0.1]}
-						rotation-z={-0.2}
-						castShadow
-					></mesh>
-					<mesh
-						geometry={boxGeometry}
-						material={wallMaterial}
-						position={[-2.1, 0, length * 2 - 2]}
-						scale={[0.2, 2.1, 4 * length - 0.1]}
-						rotation-z={0.2}
-						receiveShadow
-					></mesh>
-					<mesh
-						geometry={boxGeometry}
-						material={wallMaterial}
-						position={[0, 0, length * 4 - 2]}
-						scale={[4.6, 2.07, 0.2]}
-						receiveShadow
-					></mesh>
-					<CuboidCollider
-						args={[2, 0.1, 2 * length]}
-						position={[0, -0.1, length * 2 - 2]}
-						restitution={0.2}
-						friction={1}
-					/>
+					<Float floatIntensity={0.8} floatingRange={(1, 10)}>
+						<Sparkles count={100}>
+							<primitive
+								object={creature.scene}
+								scale={1.4}
+								rotation-y={Math.PI}
+								position-y={1.67}
+							/>
+						</Sparkles>
+					</Float>
 				</RigidBody>
 			</group>
 		</>
@@ -444,6 +407,7 @@ export function Level({
 		BlockSpinner,
 		BlockWallVertical,
 	],
+	level = 0,
 }) {
 	const blocksTrapsArray = useMemo(() => {
 		const blocksTrapsArray = [];
@@ -452,7 +416,7 @@ export function Level({
 			blocksTrapsArray.push(type);
 		}
 		return blocksTrapsArray;
-	}, [trapsCount, types]);
+	}, [trapsCount, types, level]);
 
 	return (
 		<>
@@ -465,7 +429,6 @@ export function Level({
 			))}
 			<BlockFloorEnd position={[0, -1, (trapsCount + 1) * 4.0001]} />
 			<BlockFloorPodium position={[0, -1, (trapsCount + 2) * 4.0001]} />
-			{/* <Walls length={trapsCount + 3} /> */}
 		</>
 	);
 }
