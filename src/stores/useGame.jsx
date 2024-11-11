@@ -4,7 +4,7 @@ import { subscribeWithSelector } from 'zustand/middleware';
 export default create(
 	subscribeWithSelector((set) => {
 		return {
-			trapsCount: 4,
+			trapsCount: 10,
 			trapsMix: 0,
 
 			//Time
@@ -25,7 +25,7 @@ export default create(
 			restart: () => {
 				set((state) => {
 					if (state.phase === 'playing' || state.phase === 'ended')
-						return { phase: 'ready' };
+						return { phase: 'ready', trapsMix: Math.random() };
 					return {};
 				});
 			},

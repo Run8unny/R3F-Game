@@ -153,7 +153,7 @@ export default function BodyController() {
 		state.camera.lookAt(smoothedCameraTarget);
 
 		//Phases
-		if (bodyPosition.z > trapsCount * 5 + 2) end();
+		if (bodyPosition.z > trapsCount * 4 + 3) end();
 		if (bodyPosition.y < -10) restart();
 	});
 
