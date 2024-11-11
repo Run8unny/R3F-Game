@@ -140,8 +140,8 @@ export default function BodyController() {
 		const bodyPosition = body.current.translation();
 		const cameraPosition = new THREE.Vector3();
 		cameraPosition.copy(bodyPosition);
-		cameraPosition.z -= 5;
-		cameraPosition.y += 2;
+		cameraPosition.z -= 6;
+		cameraPosition.y += 1.5;
 		const cameraTarget = new THREE.Vector3();
 		cameraTarget.copy(bodyPosition);
 		cameraTarget.y += 0.5;
