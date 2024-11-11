@@ -1,4 +1,4 @@
-import { Instance, useTexture } from '@react-three/drei';
+import { Float, Instance, useTexture } from '@react-three/drei';
 import { useFrame } from '@react-three/fiber';
 import { CuboidCollider, RigidBody } from '@react-three/rapier';
 import { useMemo, useRef, useState } from 'react';
@@ -8,7 +8,7 @@ import { useGLTF } from '@react-three/drei';
 //Geometry
 const boxGeometry = new THREE.BoxGeometry(1, 1, 1, 10, 10);
 //Materials
-const floorBlockOne = new THREE.MeshStandardMaterial({ color: '#121111' });
+const floorBlockOne = new THREE.MeshStandardMaterial({ color: '#282020' });
 const floorBlockTwo = new THREE.MeshStandardMaterial({ color: '#eee4e4' });
 const obsticleMaterialOne = new THREE.MeshStandardMaterial({
 	color: '#24c449',
@@ -381,12 +381,14 @@ export function BlockFloorPodium({ position = [0, 0, 0] }) {
 						castShadow
 						receiveShadow
 					></mesh>
-					<primitive
-						object={creature.scene}
-						scale={1.4}
-						rotation-y={Math.PI}
-						position-y={1.67}
-					/>
+					<Float>
+						<primitive
+							object={creature.scene}
+							scale={1.4}
+							rotation-y={Math.PI}
+							position-y={1.67}
+						/>
+					</Float>
 				</RigidBody>
 			</group>
 		</>
@@ -417,7 +419,7 @@ function Walls({ length = 1 }) {
 					<mesh
 						geometry={boxGeometry}
 						material={wallMaterial}
-						position={[0, 0, length * 4 - 2.1]}
+						position={[0, 0, length * 4 - 2]}
 						scale={[4.6, 2.07, 0.2]}
 						receiveShadow
 					></mesh>
@@ -454,12 +456,12 @@ export function Level({
 
 	return (
 		<>
-			<BlockFloor position={[0, -1, 0]} />
+			<BlockFloor position={[0, -1, 0.001]} />
 			{blocksTrapsArray.map((Block, index) => (
-				<Block key={index} position={[0, -1, (index + 1.001) * 4]} />
+				<Block key={index} position={[0, -1, (index + 1) * 4.0001]} />
 			))}
-			<BlockFloorEnd position={[0, -1, (trapsCount + 1) * 4]} />
-			<BlockFloorPodium position={[0, -1, (trapsCount + 2) * 4]} />
+			<BlockFloorEnd position={[0, -1, (trapsCount + 1) * 4.0001]} />
+			<BlockFloorPodium position={[0, -1, (trapsCount + 2) * 4.0001]} />
 			{/* <Walls length={trapsCount + 3} /> */}
 		</>
 	);
