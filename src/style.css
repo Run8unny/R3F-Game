@@ -79,7 +79,7 @@ body,
 	height: 50px;
 	margin: 5px;
 	border: 2px solid #ffffff;
-	background: #ffffff99;
+	background: #ffffff44;
 }
 
 .controls .key.large {
@@ -96,5 +96,6 @@ body,
 }
 
 .controls .key.active {
-	border: 3px solid #d765cf;
+	background: #ffffff99;
+	border: 4px solid #d765cf;
 }

@@ -1,7 +1,7 @@
 import { useAnimations, useGLTF } from '@react-three/drei';
 import { useEffect, useRef } from 'react';
 
-export default function Bunny({ animation, ...props }) {
+export default function Player({ animation, ...props }) {
 	const group = useRef();
 
 	const bunny = useGLTF('./bunny.glb');
