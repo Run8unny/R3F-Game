@@ -3,9 +3,7 @@ import { useRapier, CapsuleCollider, RigidBody } from '@react-three/rapier';
 import { useFrame } from '@react-three/fiber';
 import { useKeyboardControls } from '@react-three/drei';
 import * as THREE from 'three';
-// import { useControls } from 'leva';
-// import { degToRad, MathUtils } from 'three/src/math/MathUtils.js';
-import Bunny from './Bunny';
+import Player from './Player';
 
 const normalizeAngle = (angle) => {
 	while (angle > Math.PI) angle -= 2 * Math.PI;
@@ -28,7 +26,7 @@ const lerpAngle = (start, end, t) => {
 	return normalizeAngle(start + (end - start) * t);
 };
 
-export default function BunnyController() {
+export default function BodyController() {
 	const body = useRef();
 	const bunny = useRef();
 	const rotationTarget = useRef(0);
@@ -140,7 +138,7 @@ export default function BunnyController() {
 			canSleep={false}
 		>
 			<group ref={bunny}>
-				<Bunny scale={0.5} position={[0, -1, 0]} animation={animation} />
+				<Player scale={0.5} position={[0, -1, 0]} animation={animation} />
 			</group>
 
 			<CapsuleCollider args={[0.3, 0.5]} position={[0, -0.2, 0]} />
