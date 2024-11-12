@@ -137,24 +137,24 @@ export default function BodyController() {
 
 		//CAMERA
 
-		// const bodyPosition = body.current.translation();
-		// const cameraPosition = new THREE.Vector3();
-		// cameraPosition.copy(bodyPosition);
-		// cameraPosition.z -= 6;
-		// cameraPosition.y += 1.5;
-		// const cameraTarget = new THREE.Vector3();
-		// cameraTarget.copy(bodyPosition);
-		// cameraTarget.y += 0.5;
+		const bodyPosition = body.current.translation();
+		const cameraPosition = new THREE.Vector3();
+		cameraPosition.copy(bodyPosition);
+		cameraPosition.z -= 6;
+		cameraPosition.y += 1.5;
+		const cameraTarget = new THREE.Vector3();
+		cameraTarget.copy(bodyPosition);
+		cameraTarget.y += 0.5;
 
-		// smoothedCameraPosition.lerp(cameraPosition, 5 * delta);
-		// smoothedCameraTarget.lerp(cameraTarget, 5 * delta);
+		smoothedCameraPosition.lerp(cameraPosition, 5 * delta);
+		smoothedCameraTarget.lerp(cameraTarget, 5 * delta);
 
-		// state.camera.position.copy(smoothedCameraPosition);
-		// state.camera.lookAt(smoothedCameraTarget);
+		state.camera.position.copy(smoothedCameraPosition);
+		state.camera.lookAt(smoothedCameraTarget);
 
-		// //Phases
-		// if (bodyPosition.z > trapsCount * 4 + 3) end();
-		// if (bodyPosition.y < -10) restart();
+		//Phases
+		if (bodyPosition.z > trapsCount * 4 + 3) end();
+		if (bodyPosition.y < -10) restart();
 	});
 
 	return (

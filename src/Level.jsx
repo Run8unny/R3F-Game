@@ -1,4 +1,3 @@
-import { Float, Instance, Sparkles, useTexture } from '@react-three/drei';
 import { useFrame } from '@react-three/fiber';
 import { CuboidCollider, RigidBody } from '@react-three/rapier';
 import { useMemo, useRef, useState } from 'react';
@@ -376,14 +375,12 @@ export function BlockFloorPodium({ position = [0, 0, 0] }) {
 						receiveShadow
 					></mesh>
 
-					<Float floatIntensity={0.8} floatingRange={(1, 10)}>
-						<primitive
-							object={creature.scene}
-							scale={1.4}
-							rotation-y={Math.PI}
-							position-y={1.67}
-						/>
-					</Float>
+					<primitive
+						object={creature.scene}
+						scale={2}
+						rotation-y={Math.PI}
+						position-y={2.3}
+					/>
 				</RigidBody>
 			</group>
 		</>
