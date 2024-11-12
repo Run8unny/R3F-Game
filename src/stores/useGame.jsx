@@ -1,5 +1,6 @@
 import { create } from 'zustand';
 import { subscribeWithSelector } from 'zustand/middleware';
+import { playAudio } from '../BodyController';
 
 export default create(
 	subscribeWithSelector((set) => {
@@ -23,6 +24,7 @@ export default create(
 			},
 
 			restart: () => {
+				playAudio('./sounds/byebye.mp3');
 				set((state) => {
 					if (state.phase === 'playing' || state.phase === 'ended')
 						return { phase: 'ready', trapsMix: Math.random() };

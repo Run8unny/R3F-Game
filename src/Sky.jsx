@@ -23,7 +23,7 @@ export default function Sky() {
 		<>
 			<SkyImpl />
 			<group ref={ref}>
-				<Clouds material={THREE.MeshLambertMaterial} limit={200}>
+				<Clouds material={THREE.MeshLambertMaterial} limit={100}>
 					<Cloud ref={cloud0} bounds={[10, 10, 10]} color={'#fff'} />
 					<Cloud
 						bounds={[6, 1, 1]}
@@ -38,14 +38,14 @@ export default function Sky() {
 						position={[15, 0, 10]}
 					/>
 					<Cloud
-						bounds={[7, 3, 10]}
-						color='#424749'
-						seed={2}
-						position={[0, 0, -12]}
+						bounds={[10, 2, 10]}
+						color='#c8d5f1'
+						seed={1}
+						position={[0, -7, 10]}
 					/>
 					<Cloud
 						bounds={[21, 12, 59]}
-						color='#c067cf'
+						color='#cf679f'
 						seed={4}
 						position={[0, 0, 12]}
 					/>

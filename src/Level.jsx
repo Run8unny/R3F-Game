@@ -7,13 +7,21 @@ import Creature from './Creature';
 //Geometry
 const boxGeometry = new THREE.BoxGeometry(1, 1, 1, 10, 10);
 //Materials
-const floorBlockOne = new THREE.MeshStandardMaterial({ color: '#282020' });
-const floorBlockTwo = new THREE.MeshStandardMaterial({ color: '#eee4e4' });
-const obsticleMaterialOne = new THREE.MeshStandardMaterial({
-	color: '#24c449',
+const floorBlockOne = new THREE.MeshStandardMaterial({
+	color: '#282020',
+});
+const floorBlockTwo = new THREE.MeshStandardMaterial({
+	color: '#eee4e4',
+});
+const trapMaterialOne = new THREE.MeshStandardMaterial({
+	color: '#1be249',
+	metalness: 0.7,
+	roughness: 0.5,
 });
 const podiumMaterial = new THREE.MeshStandardMaterial({
 	color: '#e05b0f',
+	metalness: 0.6,
+	roughness: 0.5,
 });
 
 //Floor
@@ -29,7 +37,7 @@ export function BlockFloor({ position = [0, 0, 0] }) {
 						scale={[4, 0.2, 4]}
 						castShadow
 						receiveShadow
-					></mesh>
+					/>
 					<mesh
 						geometry={boxGeometry}
 						material={floorBlockOne}
@@ -37,7 +45,7 @@ export function BlockFloor({ position = [0, 0, 0] }) {
 						scale={[4, 0.2, 4]}
 						castShadow
 						receiveShadow
-					></mesh>
+					/>
 					<mesh
 						geometry={boxGeometry}
 						material={floorBlockTwo}
@@ -45,7 +53,7 @@ export function BlockFloor({ position = [0, 0, 0] }) {
 						scale={[4, 0.2, 4]}
 						castShadow
 						receiveShadow
-					></mesh>
+					/>
 				</RigidBody>
 				<CuboidCollider
 					args={[2, 0.1, 2 * length]}
@@ -59,13 +67,13 @@ export function BlockFloor({ position = [0, 0, 0] }) {
 }
 
 export function BlockBarVertical({ position = [0, 0, 0] }) {
-	const obsticle = useRef();
+	const trap = useRef();
 	const [timeOffset] = useState(() => Math.random() * Math.PI * 2);
 
 	useFrame((state) => {
 		const time = state.clock.elapsedTime;
 		const y = Math.sin(time + timeOffset) + 1.15;
-		obsticle.current.setNextKinematicTranslation({
+		trap.current.setNextKinematicTranslation({
 			x: position[0],
 			y: position[1] + y,
 			z: position[2],
@@ -82,7 +90,7 @@ export function BlockBarVertical({ position = [0, 0, 0] }) {
 					scale={[4, 0.2, 4]}
 					castShadow
 					receiveShadow
-				></mesh>
+				/>
 				<RigidBody type='fixed' restitution={0.2} friction={0}>
 					<mesh
 						geometry={boxGeometry}
@@ -90,19 +98,19 @@ export function BlockBarVertical({ position = [0, 0, 0] }) {
 						position={[0, -0.1, 0]}
 						scale={[4, 0.2, 4]}
 						material={floorBlockTwo}
-					></mesh>
+					/>
+					<mesh
+						geometry={boxGeometry}
+						material={floorBlockOne}
+						position={[4, -0.1, 0]}
+						scale={[4, 0.2, 4]}
+						castShadow
+						receiveShadow
+					/>
 				</RigidBody>
-				<mesh
-					geometry={boxGeometry}
-					material={floorBlockOne}
-					position={[4, -0.1, 0]}
-					scale={[4, 0.2, 4]}
-					castShadow
-					receiveShadow
-				></mesh>
 
 				<RigidBody
-					ref={obsticle}
+					ref={trap}
 					type='kinematicPosition'
 					position={[0, 0.3, 0]}
 					restitution={0.2}
@@ -110,11 +118,11 @@ export function BlockBarVertical({ position = [0, 0, 0] }) {
 				>
 					<mesh
 						geometry={boxGeometry}
-						material={obsticleMaterialOne}
+						material={trapMaterialOne}
 						scale={[3.5, 0.2, 0.2]}
 						castShadow
 						receiveShadow
-					></mesh>
+					/>
 				</RigidBody>
 			</group>
 		</>
@@ -122,7 +130,7 @@ export function BlockBarVertical({ position = [0, 0, 0] }) {
 }
 
 export function BlockSpinner({ position = [0, 0, 0] }) {
-	const obsticle = useRef();
+	const trap = useRef();
 	const [speed] = useState(
 		() => (Math.random() + 0.2) * (Math.random() < 0.5 ? -1 : 1)
 	);
@@ -131,7 +139,7 @@ export function BlockSpinner({ position = [0, 0, 0] }) {
 		const time = state.clock.elapsedTime;
 		const rotation = new THREE.Quaternion();
 		rotation.setFromEuler(new THREE.Euler(0, time * speed, 0));
-		obsticle.current.setNextKinematicRotation(rotation);
+		trap.current.setNextKinematicRotation(rotation);
 	});
 
 	return (
@@ -144,14 +152,14 @@ export function BlockSpinner({ position = [0, 0, 0] }) {
 					scale={[4, 0.2, 4]}
 					castShadow
 					receiveShadow
-				></mesh>
+				/>
 				<mesh
 					geometry={boxGeometry}
 					receiveShadow
 					position={[0, -0.1, 0]}
 					scale={[4, 0.2, 4]}
 					material={floorBlockTwo}
-				></mesh>
+				/>
 				<mesh
 					geometry={boxGeometry}
 					material={floorBlockOne}
@@ -159,9 +167,9 @@ export function BlockSpinner({ position = [0, 0, 0] }) {
 					scale={[4, 0.2, 4]}
 					castShadow
 					receiveShadow
-				></mesh>
+				/>
 				<RigidBody
-					ref={obsticle}
+					ref={trap}
 					type='kinematicPosition'
 					position={[0, 0.3, 0]}
 					restitution={0.2}
@@ -169,7 +177,7 @@ export function BlockSpinner({ position = [0, 0, 0] }) {
 				>
 					<mesh
 						geometry={boxGeometry}
-						material={obsticleMaterialOne}
+						material={trapMaterialOne}
 						scale={[3.5, 0.2, 0.2]}
 						castShadow
 						receiveShadow
@@ -181,13 +189,14 @@ export function BlockSpinner({ position = [0, 0, 0] }) {
 }
 
 export function BlockWallHorizontal({ position = [0, 0, 0] }) {
-	const obsticle = useRef();
+	const trap = useRef();
 	const [timeOffset] = useState(() => Math.random() * Math.PI * 2);
 
 	useFrame((state) => {
 		const time = state.clock.elapsedTime;
 		const x = -Math.sin(time + timeOffset) * 0.9;
-		obsticle.current.setNextKinematicTranslation({
+
+		trap.current.setNextKinematicTranslation({
 			x: position[0] + x,
 			y: position[1] + 1,
 			z: position[2],
@@ -197,15 +206,15 @@ export function BlockWallHorizontal({ position = [0, 0, 0] }) {
 	return (
 		<>
 			<group position={position}>
-				<mesh
-					geometry={boxGeometry}
-					material={floorBlockTwo}
-					position={[4, -0.1, 0]}
-					scale={[4, 0.2, 4]}
-					castShadow
-					receiveShadow
-				></mesh>
 				<RigidBody type='fixed' restitution={0.2} friction={0}>
+					<mesh
+						geometry={boxGeometry}
+						material={floorBlockTwo}
+						position={[4, -0.1, 0]}
+						scale={[4, 0.2, 4]}
+						castShadow
+						receiveShadow
+					/>
 					<mesh
 						geometry={boxGeometry}
 						receiveShadow
@@ -221,9 +230,9 @@ export function BlockWallHorizontal({ position = [0, 0, 0] }) {
 					scale={[4, 0.2, 4]}
 					castShadow
 					receiveShadow
-				></mesh>
+				/>
 				<RigidBody
-					ref={obsticle}
+					ref={trap}
 					type='kinematicPosition'
 					position={[0, 0.3, 0]}
 					restitution={0.2}
@@ -231,11 +240,11 @@ export function BlockWallHorizontal({ position = [0, 0, 0] }) {
 				>
 					<mesh
 						geometry={boxGeometry}
-						material={obsticleMaterialOne}
+						material={trapMaterialOne}
 						scale={[1.7, 1.7, 0.2]}
 						castShadow
 						receiveShadow
-					></mesh>
+					/>
 				</RigidBody>
 			</group>
 		</>
@@ -243,13 +252,13 @@ export function BlockWallHorizontal({ position = [0, 0, 0] }) {
 }
 
 export function BlockWallVertical({ position = [0, 0, 0] }) {
-	const obsticle = useRef();
+	const trap = useRef();
 	const [timeOffset] = useState(() => Math.random() * Math.PI * 2);
 
 	useFrame((state) => {
 		const time = state.clock.elapsedTime;
 		const y = Math.sin(time + timeOffset);
-		obsticle.current.setNextKinematicTranslation({
+		trap.current.setNextKinematicTranslation({
 			x: position[0],
 			y: position[1] + y,
 			z: position[2],
@@ -266,7 +275,7 @@ export function BlockWallVertical({ position = [0, 0, 0] }) {
 					scale={[4, 0.2, 4]}
 					castShadow
 					receiveShadow
-				></mesh>
+				/>
 				<RigidBody type='fixed' restitution={0.2} friction={0}>
 					<mesh
 						geometry={boxGeometry}
@@ -274,7 +283,7 @@ export function BlockWallVertical({ position = [0, 0, 0] }) {
 						position={[0, -0.1, 0]}
 						scale={[4, 0.2, 4]}
 						material={floorBlockOne}
-					></mesh>
+					/>
 				</RigidBody>
 				<mesh
 					geometry={boxGeometry}
@@ -283,9 +292,9 @@ export function BlockWallVertical({ position = [0, 0, 0] }) {
 					scale={[4, 0.2, 4]}
 					castShadow
 					receiveShadow
-				></mesh>
+				/>
 				<RigidBody
-					ref={obsticle}
+					ref={trap}
 					type='kinematicPosition'
 					position={[0, 0.3, 0]}
 					restitution={0.2}
@@ -293,11 +302,11 @@ export function BlockWallVertical({ position = [0, 0, 0] }) {
 				>
 					<mesh
 						geometry={boxGeometry}
-						material={obsticleMaterialOne}
+						material={trapMaterialOne}
 						scale={[3.5, 1.7, 0.2]}
 						castShadow
 						receiveShadow
-					></mesh>
+					/>
 				</RigidBody>
 			</group>
 		</>
@@ -316,7 +325,7 @@ export function BlockFloorEnd({ position = [0, 0, 0] }) {
 						scale={[4, 0.2, 4]}
 						castShadow
 						receiveShadow
-					></mesh>
+					/>
 					<mesh
 						geometry={boxGeometry}
 						material={floorBlockTwo}
@@ -324,15 +333,14 @@ export function BlockFloorEnd({ position = [0, 0, 0] }) {
 						scale={[4, 0.2, 4]}
 						castShadow
 						receiveShadow
-					></mesh>
+					/>
 					<mesh
 						geometry={boxGeometry}
 						material={floorBlockOne}
 						position={[4, -0.1, 0]}
 						scale={[4, 0.2, 4]}
 						castShadow
-						receiveShadow
-					></mesh>
+					/>
 				</RigidBody>
 			</group>
 		</>
@@ -351,7 +359,7 @@ export function BlockFloorPodium({ position = [0, 0, 0] }) {
 						scale={[4, 0.2, 4]}
 						castShadow
 						receiveShadow
-					></mesh>
+					/>
 					<mesh
 						geometry={boxGeometry}
 						material={podiumMaterial}
@@ -366,7 +374,7 @@ export function BlockFloorPodium({ position = [0, 0, 0] }) {
 						scale={[4, 0.2, 4]}
 						castShadow
 						receiveShadow
-					></mesh>
+					/>
 					<Creature />
 				</RigidBody>
 			</group>

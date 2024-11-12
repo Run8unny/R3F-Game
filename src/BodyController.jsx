@@ -27,6 +27,11 @@ const lerpAngle = (start, end, t) => {
 	return normalizeAngle(start + (end - start) * t);
 };
 
+export const playAudio = (path) => {
+	const audio = new Audio(path);
+	audio.play();
+};
+
 export default function BodyController() {
 	const body = useRef();
 	const bunny = useRef();
@@ -53,6 +58,7 @@ export default function BodyController() {
 		if (hit.timeOfImpact < 0.15)
 			body.current.applyImpulse({ x: 0, y: 2.5, z: 0 });
 		setAnimation('Jump');
+		playAudio('./sounds/jump.mp3');
 		if (origin.y > 3) body.current.applyImpulse({ x: 0, y: -15, z: 0 });
 	};
 
@@ -90,7 +96,6 @@ export default function BodyController() {
 
 	useFrame((state, delta) => {
 		//CONTROLS
-
 		if (body.current) {
 			const velocity = body.current.linvel();
 			const { forward, backward, leftward, rightward, run } = getKeys();
@@ -136,26 +141,25 @@ export default function BodyController() {
 			body.current.setLinvel(velocity, true);
 		}
 
-		//CAMERA
+		//Camera
+		// const bodyPosition = body.current.translation();
+		// const cameraPosition = new THREE.Vector3();
+		// cameraPosition.copy(bodyPosition);
+		// cameraPosition.z -= 6;
+		// cameraPosition.y += 1.5;
+		// const cameraTarget = new THREE.Vector3();
+		// cameraTarget.copy(bodyPosition);
+		// cameraTarget.y += 0.5;
 
-		const bodyPosition = body.current.translation();
-		const cameraPosition = new THREE.Vector3();
-		cameraPosition.copy(bodyPosition);
-		cameraPosition.z -= 6;
-		cameraPosition.y += 1.5;
-		const cameraTarget = new THREE.Vector3();
-		cameraTarget.copy(bodyPosition);
-		cameraTarget.y += 0.5;
+		// smoothedCameraPosition.lerp(cameraPosition, 5 * delta);
+		// smoothedCameraTarget.lerp(cameraTarget, 5 * delta);
 
-		smoothedCameraPosition.lerp(cameraPosition, 5 * delta);
-		smoothedCameraTarget.lerp(cameraTarget, 5 * delta);
+		// state.camera.position.copy(smoothedCameraPosition);
+		// state.camera.lookAt(smoothedCameraTarget);
 
-		state.camera.position.copy(smoothedCameraPosition);
-		state.camera.lookAt(smoothedCameraTarget);
-
-		//Phases
-		if (bodyPosition.z > trapsCount * 4 + 3) end();
-		if (bodyPosition.y < -30) restart();
+		// //Phases
+		// if (bodyPosition.z > trapsCount * 4 + 3) end();
+		// if (bodyPosition.y < -30) restart();
 	});
 
 	return (
