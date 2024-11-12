@@ -135,9 +135,6 @@ export default function BodyController() {
 			);
 			body.current.setLinvel(velocity, true);
 		}
-
-		//CAMERA
-
 		const bodyPosition = body.current.translation();
 		const cameraPosition = new THREE.Vector3();
 		cameraPosition.copy(bodyPosition);
