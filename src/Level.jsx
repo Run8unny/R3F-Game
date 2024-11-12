@@ -2,7 +2,7 @@ import { useFrame } from '@react-three/fiber';
 import { CuboidCollider, RigidBody } from '@react-three/rapier';
 import { useMemo, useRef, useState } from 'react';
 import * as THREE from 'three';
-import { useGLTF } from '@react-three/drei';
+import Creature from './Creature';
 
 //Geometry
 const boxGeometry = new THREE.BoxGeometry(1, 1, 1, 10, 10);
@@ -15,8 +15,6 @@ const obsticleMaterialOne = new THREE.MeshStandardMaterial({
 const podiumMaterial = new THREE.MeshStandardMaterial({
 	color: '#e05b0f',
 });
-
-//Textures
 
 //Floor
 export function BlockFloor({ position = [0, 0, 0] }) {
@@ -342,11 +340,6 @@ export function BlockFloorEnd({ position = [0, 0, 0] }) {
 }
 
 export function BlockFloorPodium({ position = [0, 0, 0] }) {
-	const creature = useGLTF('./cup.glb');
-	creature.scene.children.forEach((mesh) => {
-		mesh.castShadow = true;
-	});
-
 	return (
 		<>
 			<group position={position}>
@@ -374,13 +367,7 @@ export function BlockFloorPodium({ position = [0, 0, 0] }) {
 						castShadow
 						receiveShadow
 					></mesh>
-
-					<primitive
-						object={creature.scene}
-						scale={2}
-						rotation-y={Math.PI}
-						position-y={2.3}
-					/>
+					<Creature />
 				</RigidBody>
 			</group>
 		</>

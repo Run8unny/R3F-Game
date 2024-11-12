@@ -50,9 +50,10 @@ export default function BodyController() {
 		const direction = { x: 0, y: -1, z: 0 };
 		const ray = new rapier.Ray(origin, direction);
 		const hit = world.castRay(ray, 5, true);
-		if (hit.timeOfImpact < 0.2)
+		if (hit.timeOfImpact < 0.15)
 			body.current.applyImpulse({ x: 0, y: 2.5, z: 0 });
 		setAnimation('Jump');
+		if (origin.y > 3) body.current.applyImpulse({ x: 0, y: -15, z: 0 });
 	};
 
 	const reset = () => {
@@ -154,7 +155,7 @@ export default function BodyController() {
 
 		//Phases
 		if (bodyPosition.z > trapsCount * 4 + 3) end();
-		if (bodyPosition.y < -10) restart();
+		if (bodyPosition.y < -30) restart();
 	});
 
 	return (
