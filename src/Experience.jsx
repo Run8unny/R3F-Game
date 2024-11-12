@@ -6,6 +6,7 @@ import { Physics } from '@react-three/rapier';
 import BodyController from './BodyController.jsx';
 import useGame from './stores/useGame.jsx';
 import Sky from './Sky.jsx';
+import Finish from './Finish.jsx';
 
 export default function Experience() {
 	const trapsCount = useGame((state) => state.trapsCount);
@@ -21,6 +22,7 @@ export default function Experience() {
 					<Level trapsCount={trapsCount} level={trapsMix} />
 					<BodyController />
 				</Physics>
+				<Finish />
 			</Center>
 		</>
 	);
