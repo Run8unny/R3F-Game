@@ -1,5 +1,6 @@
-import { Float, Text3D } from '@react-three/drei';
+import { Float, Text3D, useGLTF } from '@react-three/drei';
 export default function Finish() {
+	const balloons = useGLTF('./balloons.glb');
 	return (
 		<Float
 			floatIntensity={0.2}
@@ -8,7 +9,7 @@ export default function Finish() {
 		>
 			<Text3D
 				font='./fonts/Silkscreen_Bold.json'
-				position={[6.5, -2, 49]}
+				position={[6.5, -2, 50]}
 				rotation-y={-Math.PI}
 				size={2}
 				height={0.5}
@@ -22,6 +23,7 @@ export default function Finish() {
 				Finish
 				<meshLambertMaterial color={'#282020'} />
 			</Text3D>
+			<primitive object={balloons.scene} scale={2} position={[4, -12, 52]} />
 		</Float>
 	);
 }
