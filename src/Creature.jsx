@@ -1,5 +1,5 @@
 import { Float, useGLTF } from '@react-three/drei';
-import { CapsuleCollider, RigidBody } from '@react-three/rapier';
+import { RigidBody } from '@react-three/rapier';
 export default function Creature() {
 	const creature = useGLTF('./cup.glb');
 	creature.scene.children.forEach((mesh) => {
