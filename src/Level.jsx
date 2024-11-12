@@ -17,10 +17,6 @@ const podiumMaterial = new THREE.MeshStandardMaterial({
 	color: '#e05b0f',
 });
 
-// const obsticleMaterialThree = new THREE.MeshStandardMaterial({
-// 	color: '#1416b9',
-// });
-
 //Textures
 
 //Floor
@@ -388,14 +384,6 @@ export function BlockFloorPodium({ position = [0, 0, 0] }) {
 							position-y={1.67}
 						/>
 					</Float>
-					<Sparkles
-						size={20}
-						scale={(5, 6, 5)}
-						position-y={1}
-						speed={0.2}
-						count={40}
-						color={[123, 10, 70]}
-					/>
 				</RigidBody>
 			</group>
 		</>
