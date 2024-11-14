@@ -115,14 +115,6 @@ body,
 	margin-bottom: 100px;
 }
 
-.textLoader {
-	width: 100%;
-	text-align: center;
-	margin: auto;
-	color: #ea4c89;
-	margin-top: 100px;
-}
-
 .loader:before {
 	content: '';
 	position: absolute;
