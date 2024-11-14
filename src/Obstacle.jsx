@@ -7,14 +7,6 @@ import { useMemo, useRef, useState } from 'react';
 import { useGLTF } from '@react-three/drei';
 
 export default function Obstacle() {
-	const [hitSound] = useState(() => new Audio('./sounds/hit.mp3'));
-
-	const collisionEnter = () => {
-		hitSound.currentTime = 0;
-		hitSound.volume = Math.random();
-		hitSound.play();
-	};
-
 	const hamburger = useGLTF('./hamburger.glb');
 	const cubesCount = 20;
 
@@ -37,18 +29,14 @@ export default function Obstacle() {
 
 	return (
 		<>
-			<RigidBody colliders='ball' onCollisionEnter={collisionEnter}>
+			<RigidBody colliders='ball'>
 				<mesh castShadow position={[-1.5, 2, 30]}>
 					<sphereGeometry />
 					<meshStandardMaterial color='#e30858' />
 				</mesh>
 			</RigidBody>
 
-			<RigidBody
-				colliders={false}
-				position={[2.5, 0, 0]}
-				onCollisionEnter={collisionEnter}
-			>
+			<RigidBody colliders={false} position={[2.5, 0, 0]}>
 				<CylinderCollider args={[0.2, 0.8]} position={[0, 0.4, 0]} />
 				<primitive object={hamburger.scene} scale={0.15} />
 			</RigidBody>
