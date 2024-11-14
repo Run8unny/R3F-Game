@@ -73,11 +73,13 @@ export function BlockBarVertical({ position = [0, 0, 0] }) {
 	useFrame((state) => {
 		const time = state.clock.elapsedTime;
 		const y = Math.sin(time + timeOffset) + 1.15;
-		trap.current.setNextKinematicTranslation({
-			x: position[0],
-			y: position[1] + y,
-			z: position[2],
-		});
+		if (trap.current) {
+			trap.current.setNextKinematicTranslation({
+				x: position[0],
+				y: position[1] + y,
+				z: position[2],
+			});
+		}
 	});
 
 	return (
@@ -138,8 +140,10 @@ export function BlockSpinner({ position = [0, 0, 0] }) {
 	useFrame((state) => {
 		const time = state.clock.elapsedTime;
 		const rotation = new THREE.Quaternion();
-		rotation.setFromEuler(new THREE.Euler(0, time * speed, 0));
-		trap.current.setNextKinematicRotation(rotation);
+		if (trap.current) {
+			rotation.setFromEuler(new THREE.Euler(0, time * speed, 0));
+			trap.current.setNextKinematicRotation(rotation);
+		}
 	});
 
 	return (
@@ -195,12 +199,13 @@ export function BlockWallHorizontal({ position = [0, 0, 0] }) {
 	useFrame((state) => {
 		const time = state.clock.elapsedTime;
 		const x = -Math.sin(time + timeOffset) * 0.9;
-
-		trap.current.setNextKinematicTranslation({
-			x: position[0] + x,
-			y: position[1] + 1,
-			z: position[2],
-		});
+		if (trap.current) {
+			trap.current.setNextKinematicTranslation({
+				x: position[0] + x,
+				y: position[1] + 1,
+				z: position[2],
+			});
+		}
 	});
 
 	return (
@@ -258,11 +263,13 @@ export function BlockWallVertical({ position = [0, 0, 0] }) {
 	useFrame((state) => {
 		const time = state.clock.elapsedTime;
 		const y = Math.sin(time + timeOffset);
-		trap.current.setNextKinematicTranslation({
-			x: position[0],
-			y: position[1] + y,
-			z: position[2],
-		});
+		if (trap.current) {
+			trap.current.setNextKinematicTranslation({
+				x: position[0],
+				y: position[1] + y,
+				z: position[2],
+			});
+		}
 	});
 
 	return (

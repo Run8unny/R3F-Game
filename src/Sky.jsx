@@ -41,7 +41,7 @@ export default function Sky() {
 						bounds={[10, 2, 10]}
 						color='#c8d5f1'
 						seed={1}
-						position={[0, -7, 10]}
+						position={[0, -6, 10]}
 					/>
 					<Cloud
 						bounds={[21, 12, 59]}
