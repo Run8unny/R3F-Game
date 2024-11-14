@@ -1,11 +1,6 @@
 import { create } from 'zustand';
 import { subscribeWithSelector } from 'zustand/middleware';
 
-export const playAudio = (path) => {
-	const audio = new Audio(path);
-	audio.play();
-};
-
 export default create(
 	subscribeWithSelector((set) => {
 		return {
@@ -28,7 +23,6 @@ export default create(
 			},
 
 			restart: () => {
-				playAudio('./sounds/byebye.mp3');
 				set((state) => {
 					if (state.phase === 'playing' || state.phase === 'ended')
 						return { phase: 'ready', trapsMix: Math.random() };

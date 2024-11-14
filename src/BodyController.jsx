@@ -5,7 +5,6 @@ import { useKeyboardControls } from '@react-three/drei';
 import * as THREE from 'three';
 import Player from './Player';
 import useGame from './stores/useGame';
-import { playAudio } from './stores/useGame';
 
 const normalizeAngle = (angle) => {
 	while (angle > Math.PI) angle -= 2 * Math.PI;
@@ -57,7 +56,6 @@ export default function BodyController() {
 		if (hit.timeOfImpact < 0.15)
 			body.current.applyImpulse({ x: 0, y: 2.5, z: 0 });
 		setAnimation('Jump');
-		playAudio('./sounds/jump.mp3');
 		if (origin.y > 3) body.current.applyImpulse({ x: 0, y: -15, z: 0 });
 	};
 
@@ -158,7 +156,9 @@ export default function BodyController() {
 		state.camera.lookAt(smoothedCameraTarget);
 
 		//Phases
-		if (bodyPosition.z > trapsCount * 4 + 3) end();
+		if (bodyPosition.z > trapsCount * 4 + 3) {
+			end();
+		}
 		if (bodyPosition.y < -30) restart();
 	});
 
