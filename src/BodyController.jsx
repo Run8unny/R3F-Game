@@ -27,6 +27,11 @@ const lerpAngle = (start, end, t) => {
 	return normalizeAngle(start + (end - start) * t);
 };
 
+export const playAudio = (path) => {
+	const audio = new Audio(path);
+	audio.play();
+};
+
 export default function BodyController() {
 	const body = useRef();
 	const bunny = useRef();
@@ -53,6 +58,7 @@ export default function BodyController() {
 		if (hit.timeOfImpact < 0.15)
 			body.current.applyImpulse({ x: 0, y: 2.5, z: 0 });
 		setAnimation('Jump');
+		playAudio('./sounds/jump.mp3');
 		if (origin.y > 3) body.current.applyImpulse({ x: 0, y: -15, z: 0 });
 	};
 
@@ -90,7 +96,6 @@ export default function BodyController() {
 
 	useFrame((state, delta) => {
 		//CONTROLS
-
 		if (body.current) {
 			const velocity = body.current.linvel();
 			const { forward, backward, leftward, rightward, run } = getKeys();
@@ -135,6 +140,8 @@ export default function BodyController() {
 			);
 			body.current.setLinvel(velocity, true);
 		}
+
+		//Camera
 		const bodyPosition = body.current.translation();
 		const cameraPosition = new THREE.Vector3();
 		cameraPosition.copy(bodyPosition);

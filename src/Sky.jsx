@@ -38,14 +38,14 @@ export default function Sky() {
 						position={[15, 0, 10]}
 					/>
 					<Cloud
-						bounds={[7, 3, 10]}
-						color='#a7acaf'
-						seed={3}
-						position={[-8, 0, 18]}
+						bounds={[10, 2, 10]}
+						color='#c8d5f1'
+						seed={1}
+						position={[0, -6, 10]}
 					/>
 					<Cloud
 						bounds={[21, 12, 59]}
-						color='#c067cf'
+						color='#cf679f'
 						seed={4}
 						position={[0, 0, 12]}
 					/>
