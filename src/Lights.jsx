@@ -25,7 +25,7 @@ export default function Lights() {
 				shadow-camera-bottom={-10}
 				shadow-camera-left={-10}
 			/>
-			<ambientLight intensity={4} />
+			<ambientLight intensity={3} />
 			<spotLight
 				position={[0, 40, 0]}
 				decay={0}
