@@ -112,7 +112,12 @@ body,
 	height: 75px;
 	width: 75px;
 	float: center;
-	margin-bottom: 100px;
+	animation-delay: 0.9s;
+	animation-duration: 0.8s;
+	animation-name: pump;
+	animation-iteration-count: infinite;
+	animation-direction: alternate;
+	animation-timing-function: cubic-bezier(0.26, -0.53, 0.57, 2.32);
 }
 
 .loader:before {
@@ -135,10 +140,6 @@ body,
 	width: 40px;
 	z-index: 1;
 	border-radius: 50%;
-	animation-duration: 2s;
-	animation-name: change1;
-	animation-iteration-count: infinite;
-	/*animation-direction: alternate;*/
 }
 
 .loader .heart2 {
@@ -150,33 +151,13 @@ body,
 	z-index: 1;
 	margin-left: 30px;
 	border-radius: 50%;
-	animation-duration: 2s;
-	animation-name: change2;
-	animation-iteration-count: infinite;
 }
 
-@keyframes change1 {
-	0%,
-	25% {
-		margin-top: 0px;
-		margin-left: 0px;
+@keyframes pump {
+	0% {
+		transform: scale(1);
 	}
-	50%,
-	75% {
-		margin-top: 30px;
-		margin-left: 30px;
-	}
-}
-
-@keyframes change2 {
-	25%,
-	50% {
-		margin-top: 30px;
-		margin-left: 0px;
-	}
-	75%,
 	100% {
-		margin-top: 0px;
-		margin-left: 30px;
+		transform: scale(1.1);
 	}
 }
