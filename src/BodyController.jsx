@@ -45,6 +45,7 @@ export default function BodyController() {
 	const trapsCount = useGame((state) => state.trapsCount);
 	const cameraPosition = new THREE.Vector3();
 	const cameraTarget = new THREE.Vector3();
+	const playAudio = useGame((state) => state.playAudio);
 
 	const jump = () => {
 		if (!body.current) return;
@@ -56,10 +57,12 @@ export default function BodyController() {
 		if (hit.timeOfImpact < 0.15)
 			body.current.applyImpulse({ x: 0, y: 2.5, z: 0 });
 		setAnimation('Jump');
+		playAudio('./sounds/jump.mp3');
 		if (origin.y > 3) body.current.applyImpulse({ x: 0, y: -15, z: 0 });
 	};
 
 	const reset = () => {
+		playAudio('./sounds/byebye.mp3');
 		body.current.setTranslation({ x: 0, y: 1, z: 0 });
 		body.current.setLinvel({ x: 0, y: 0, z: 0 });
 		body.current.setAngvel({ x: 0, y: 0, z: 0 });
@@ -70,6 +73,10 @@ export default function BodyController() {
 			(state) => state.phase,
 			(phase) => {
 				if (phase === 'ready') reset();
+				if (phase === 'playing') {
+					playAudio('./sounds/gamba.mp3');
+				}
+				if (phase === 'ended') playAudio('./sounds/winning.mp3');
 			}
 		);
 

@@ -1,7 +1,9 @@
 import { useKeyboardControls } from '@react-three/drei';
 import useGame from './stores/useGame';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { addEffect } from '@react-three/fiber';
+import useSound from 'use-sound';
+
 export default function Interface() {
 	const forward = useKeyboardControls((state) => state.forward);
 	const backward = useKeyboardControls((state) => state.backward);
@@ -54,9 +56,11 @@ export default function Interface() {
 				</div>
 				<div className='raw'>
 					<div className={`key large ${jump ? 'active' : ''}`}></div>
-					<div className={`key medium ${run ? 'active' : ''}`}>shift</div>
+					<div className={`key medium ${run ? 'active' : ''}`}>SHIFT</div>
 				</div>
-				<div className='raw'></div>
+				<div className='raw'>
+					<div className={`key medium ${run ? 'active' : ''}`}>MUSIC</div>
+				</div>
 			</div>
 		</div>
 	);
