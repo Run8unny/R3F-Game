@@ -1,6 +1,10 @@
 import { create } from 'zustand';
 import { subscribeWithSelector } from 'zustand/middleware';
-import { playAudio } from '../BodyController';
+
+export const playAudio = (path) => {
+	const audio = new Audio(path);
+	audio.play();
+};
 
 export default create(
 	subscribeWithSelector((set) => {

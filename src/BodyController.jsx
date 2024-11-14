@@ -5,6 +5,7 @@ import { useKeyboardControls } from '@react-three/drei';
 import * as THREE from 'three';
 import Player from './Player';
 import useGame from './stores/useGame';
+import { playAudio } from './stores/useGame';
 
 const normalizeAngle = (angle) => {
 	while (angle > Math.PI) angle -= 2 * Math.PI;
@@ -25,11 +26,6 @@ const lerpAngle = (start, end, t) => {
 	}
 
 	return normalizeAngle(start + (end - start) * t);
-};
-
-export const playAudio = (path) => {
-	const audio = new Audio(path);
-	audio.play();
 };
 
 export default function BodyController() {
