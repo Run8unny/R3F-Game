@@ -4,6 +4,8 @@ import { Canvas } from '@react-three/fiber';
 import Experience from './Experience.jsx';
 import { KeyboardControls } from '@react-three/drei';
 import Interface from './Interface.jsx';
+import { Suspense } from 'react';
+import Loader from './Loader.jsx';
 
 const root = ReactDOM.createRoot(document.querySelector('#root'));
 
@@ -18,17 +20,19 @@ root.render(
 			{ name: 'run', keys: ['Shift'] },
 		]}
 	>
-		<Canvas
-			shadows
-			camera={{
-				fov: 35,
-				near: 0.2,
-				far: 300,
-				position: [0, 2, -6],
-			}}
-		>
-			<Experience />
-		</Canvas>
+		<Suspense fallback={<Loader />}>
+			<Canvas
+				shadows
+				camera={{
+					fov: 35,
+					near: 0.2,
+					far: 300,
+					position: [0, 2, -6],
+				}}
+			>
+				<Experience />
+			</Canvas>
+		</Suspense>
 		<Interface />
 	</KeyboardControls>
 );

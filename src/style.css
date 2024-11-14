@@ -10,7 +10,8 @@ body,
 	left: 0;
 	width: 100%;
 	height: 100%;
-	background: ivory;
+	background: rgb(0, 0, 0);
+	font-family: 'Silkscreen', sans-serif;
 }
 
 /* Interface */
@@ -21,7 +22,6 @@ body,
 	width: 100%;
 	height: 100%;
 	pointer-events: none;
-	font-family: 'Silkscreen', sans-serif;
 	font-weight: 700;
 	font-style: normal;
 }
@@ -96,4 +96,95 @@ body,
 .controls .key.active {
 	background: #ffffff99;
 	border: 4px solid #ea8c56;
+}
+
+.loaderBox {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	width: 100%;
+	height: 100%;
+}
+
+.loader {
+	border-radius: 10px;
+	height: 75px;
+	width: 75px;
+	float: center;
+	margin-bottom: 100px;
+}
+
+.textLoader {
+	width: 100%;
+	text-align: center;
+	margin: auto;
+	color: #ea4c89;
+	margin-top: 100px;
+}
+
+.loader:before {
+	content: '';
+	position: absolute;
+	background: #ea4c89;
+	height: 40px;
+	width: 40px;
+	z-index: 0;
+	margin-top: 15px;
+	margin-left: 15px;
+	transform: rotate(45deg);
+}
+
+.loader .heart1 {
+	content: '';
+	position: absolute;
+	background: #ea4c89;
+	height: 40px;
+	width: 40px;
+	z-index: 1;
+	border-radius: 50%;
+	animation-duration: 2s;
+	animation-name: change1;
+	animation-iteration-count: infinite;
+	/*animation-direction: alternate;*/
+}
+
+.loader .heart2 {
+	content: '';
+	position: absolute;
+	background: #ea4c89;
+	height: 40px;
+	width: 40px;
+	z-index: 1;
+	margin-left: 30px;
+	border-radius: 50%;
+	animation-duration: 2s;
+	animation-name: change2;
+	animation-iteration-count: infinite;
+}
+
+@keyframes change1 {
+	0%,
+	25% {
+		margin-top: 0px;
+		margin-left: 0px;
+	}
+	50%,
+	75% {
+		margin-top: 30px;
+		margin-left: 30px;
+	}
+}
+
+@keyframes change2 {
+	25%,
+	50% {
+		margin-top: 30px;
+		margin-left: 0px;
+	}
+	75%,
+	100% {
+		margin-top: 0px;
+		margin-left: 30px;
+	}
 }

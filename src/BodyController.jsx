@@ -48,8 +48,11 @@ export default function BodyController() {
 	const restart = useGame((state) => state.restart);
 	const end = useGame((state) => state.end);
 	const trapsCount = useGame((state) => state.trapsCount);
+	const cameraPosition = new THREE.Vector3();
+	const cameraTarget = new THREE.Vector3();
 
 	const jump = () => {
+		if (!body.current) return;
 		const origin = body.current.translation();
 		origin.y -= 0.5;
 		const direction = { x: 0, y: -1, z: 0 };
@@ -95,6 +98,7 @@ export default function BodyController() {
 	}, []);
 
 	useFrame((state, delta) => {
+		if (!body.current) return;
 		//CONTROLS
 		if (body.current) {
 			const velocity = body.current.linvel();
@@ -143,11 +147,11 @@ export default function BodyController() {
 
 		//Camera
 		const bodyPosition = body.current.translation();
-		const cameraPosition = new THREE.Vector3();
+
 		cameraPosition.copy(bodyPosition);
 		cameraPosition.z -= 6;
 		cameraPosition.y += 1.5;
-		const cameraTarget = new THREE.Vector3();
+
 		cameraTarget.copy(bodyPosition);
 		cameraTarget.y += 0.5;
 
