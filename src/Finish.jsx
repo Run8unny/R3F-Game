@@ -4,8 +4,8 @@ export default function Finish() {
 	return (
 		<Float
 			floatIntensity={0.2}
-			floatingRange={(-0.2, 0.2)}
-			rotationIntensity={0.3}
+			floatingRange={(-0.1, 0.1)}
+			rotationIntensity={0.15}
 		>
 			<Text3D
 				font='./fonts/Silkscreen_Bold.json'
@@ -23,7 +23,7 @@ export default function Finish() {
 				Finish
 				<meshStandardMaterial color={'#282020'} />
 			</Text3D>
-			<primitive object={balloons.scene} scale={2} position={[4, -12, 52]} />
+			<primitive object={balloons.scene} scale={2.3} position={[4, -12, 52]} />
 		</Float>
 	);
 }

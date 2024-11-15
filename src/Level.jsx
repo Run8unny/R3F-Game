@@ -11,7 +11,7 @@ const floorBlockOne = new THREE.MeshStandardMaterial({
 	color: '#282020',
 });
 const floorBlockTwo = new THREE.MeshStandardMaterial({
-	color: '#eee4e4',
+	color: '#e4d7cf',
 });
 const trapMaterialOne = new THREE.MeshStandardMaterial({
 	color: '#e8e2e2',

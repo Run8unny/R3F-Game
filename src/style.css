@@ -30,7 +30,7 @@ body,
 /* Time */
 .time {
 	position: absolute;
-	top: 8%;
+	top: 7%;
 	left: 0;
 	width: 100%;
 	color: #ffffff;
@@ -62,7 +62,7 @@ body,
  */
 .controls {
 	position: absolute;
-	bottom: 8%;
+	bottom: 7%;
 	left: 0;
 	width: 100%;
 }

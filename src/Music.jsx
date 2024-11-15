@@ -31,12 +31,12 @@ export default function Music() {
 	};
 
 	return (
-		<RigidBody type='fixed' position={[-5, -7, 3]}>
+		<RigidBody type='fixed' position={[-5, -6.8, 5]}>
 			<group onClick={toggleMusic} dispose={null}>
 				<group
 					rotation={[-Math.PI / 2, Math.PI, 0 + 0.5]}
 					position={[0, 4, 5]}
-					scale={0.55}
+					scale={0.5}
 				>
 					<mesh
 						castShadow
