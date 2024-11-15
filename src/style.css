@@ -12,6 +12,7 @@ body,
 	height: 100%;
 	background: rgb(0, 0, 0);
 	font-family: 'Silkscreen', sans-serif;
+	cursor: pointer;
 }
 
 /* Interface */
@@ -29,7 +30,7 @@ body,
 /* Time */
 .time {
 	position: absolute;
-	top: 8%;
+	top: 7%;
 	left: 0;
 	width: 100%;
 	color: #ffffff;
@@ -50,7 +51,6 @@ body,
 	font-size: 80px;
 	background: #00000033;
 	pointer-events: auto;
-	cursor: pointer;
 }
 
 .restart:hover {
@@ -62,7 +62,7 @@ body,
  */
 .controls {
 	position: absolute;
-	bottom: 8%;
+	bottom: 7%;
 	left: 0;
 	width: 100%;
 }

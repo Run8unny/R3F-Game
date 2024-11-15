@@ -1,6 +1,6 @@
 import { Center, Environment, OrbitControls, Stars } from '@react-three/drei';
 import Lights from './Lights.jsx';
-import { Perf } from 'r3f-perf';
+// import { Perf } from 'r3f-perf';
 import { Level } from './Level.jsx';
 import { Physics } from '@react-three/rapier';
 import BodyController from './BodyController.jsx';
@@ -15,7 +15,7 @@ export default function Experience() {
 	const trapsMix = useGame((state) => state.trapsMix);
 	return (
 		<>
-			<Perf position='top-left' />
+			{/* <Perf position='top-left' /> */}
 			<Center>
 				<Sky />
 				<OrbitControls makeDefault />
