@@ -1,7 +1,9 @@
 import { Float, useGLTF } from '@react-three/drei';
+import Portal from './Portal';
+
 export default function Finish() {
 	const balloons = useGLTF('./balloons.glb');
-	const portal = useGLTF('./portal.glb');
+
 	return (
 		<>
 			<Float
@@ -15,7 +17,7 @@ export default function Finish() {
 					position={[-6, -14, 40]}
 				/>
 			</Float>
-			<primitive object={portal.scene} scale={5} position={[0, -7, 58]} />
+			<Portal />
 		</>
 	);
 }
