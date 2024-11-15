@@ -3,6 +3,7 @@ import { CuboidCollider, RigidBody } from '@react-three/rapier';
 import { useMemo, useRef, useState } from 'react';
 import * as THREE from 'three';
 import Creature from './Creature';
+import { useGLTF } from '@react-three/drei';
 
 //Geometry
 const boxGeometry = new THREE.BoxGeometry(1, 1, 1, 10, 10);
@@ -11,7 +12,7 @@ const floorBlockOne = new THREE.MeshStandardMaterial({
 	color: '#282020',
 });
 const floorBlockTwo = new THREE.MeshStandardMaterial({
-	color: '#e4d7cf',
+	color: '#eee8e4',
 });
 const trapMaterialOne = new THREE.MeshStandardMaterial({
 	color: '#e8e2e2',
@@ -26,6 +27,7 @@ const podiumMaterial = new THREE.MeshStandardMaterial({
 
 //Floor
 export function BlockFloor({ position = [0, 0, 0] }) {
+	const flower = useGLTF('./flower2.glb');
 	return (
 		<>
 			<group position={position} rotation-x={-0.005}>
@@ -53,6 +55,11 @@ export function BlockFloor({ position = [0, 0, 0] }) {
 						scale={[4, 0.2, 4]}
 						castShadow
 						receiveShadow
+					/>
+					<primitive
+						object={flower.scene}
+						scale={4}
+						position={[-5, -0.2, 10]}
 					/>
 				</RigidBody>
 				<CuboidCollider
@@ -195,6 +202,7 @@ export function BlockSpinner({ position = [0, 0, 0] }) {
 }
 
 export function BlockWallHorizontal({ position = [0, 0, 0] }) {
+	const flower1 = useGLTF('flower1.glb');
 	const trap = useRef();
 	const [timeOffset] = useState(() => Math.random() * Math.PI * 2);
 
@@ -230,6 +238,7 @@ export function BlockWallHorizontal({ position = [0, 0, 0] }) {
 						scale={[4, 0.2, 4]}
 						material={floorBlockOne}
 					/>
+					<primitive object={flower1.scene} scale={7} position={[5, 0, 0]} />
 				</RigidBody>
 				<mesh
 					geometry={boxGeometry}
@@ -325,6 +334,7 @@ export function BlockWallVertical({ position = [0, 0, 0] }) {
 }
 
 export function BlockFloorEnd({ position = [0, 0, 0] }) {
+	const tree = useGLTF('./tree.glb');
 	return (
 		<>
 			<group position={position}>
@@ -351,8 +361,9 @@ export function BlockFloorEnd({ position = [0, 0, 0] }) {
 						position={[4, -0.1, 0]}
 						scale={[4, 0.2, 4]}
 						castShadow
-					/>
+					></mesh>
 				</RigidBody>
+				<primitive object={tree.scene} scale={0.9} position={[6, 0, -12]} />
 			</group>
 		</>
 	);
@@ -366,23 +377,23 @@ export function BlockFloorPodium({ position = [0, 0, 0] }) {
 					<mesh
 						geometry={boxGeometry}
 						material={floorBlockTwo}
-						position={[-4, -0.1, 0]}
-						scale={[4, 0.2, 4]}
+						position={[-4, -0.8, 0]}
+						scale={[4, 2, 4]}
 						castShadow
 						receiveShadow
 					/>
 					<mesh
 						geometry={boxGeometry}
 						material={podiumMaterial}
-						position={[0, 0.25, 0]}
-						scale={[4, 0.4, 4]}
+						position={[0, -0.45, 0]}
+						scale={[4, 2, 4]}
 						receiveShadow
 					/>
 					<mesh
 						geometry={boxGeometry}
 						material={floorBlockTwo}
-						position={[4, -0.1, 0]}
-						scale={[4, 0.2, 4]}
+						position={[4, -0.8, 0]}
+						scale={[4, 2, 4]}
 						castShadow
 						receiveShadow
 					/>

@@ -30,7 +30,7 @@ export default function Obstacle() {
 	return (
 		<>
 			<RigidBody colliders='ball'>
-				<mesh castShadow position={[-1.5, 2, 30]}>
+				<mesh castShadow position={[1.5, 2, 30]}>
 					<sphereGeometry />
 					<meshStandardMaterial color='#e30858' />
 				</mesh>
