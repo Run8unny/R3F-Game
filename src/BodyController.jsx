@@ -150,8 +150,8 @@ export default function BodyController() {
 		const bodyPosition = body.current.translation();
 
 		cameraPosition.copy(bodyPosition);
-		cameraPosition.z -= 6;
-		cameraPosition.y += 1.5;
+		cameraPosition.z -= 5.5;
+		cameraPosition.y += 1;
 
 		cameraTarget.copy(bodyPosition);
 		cameraTarget.y += 0.5;
