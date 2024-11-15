@@ -40,6 +40,8 @@ export default create(
 
 			playAudio: (path) => {
 				const audio = new Audio(path);
+				audio.currentTime = 0;
+				audio.volume = 0.6;
 				audio.play();
 			},
 		};

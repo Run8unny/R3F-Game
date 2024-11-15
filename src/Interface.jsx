@@ -20,7 +20,9 @@ export default function Interface() {
 			const state = useGame.getState();
 			let elapsedTime = 0;
 
-			if (state.phase === 'playing') elapsedTime = Date.now() - state.startTime;
+			if (state.phase === 'playing') {
+				elapsedTime = Date.now() - state.startTime;
+			}
 			if (state.phase === 'ended')
 				elapsedTime = state.endTime - state.startTime;
 
@@ -57,9 +59,6 @@ export default function Interface() {
 				<div className='raw'>
 					<div className={`key large ${jump ? 'active' : ''}`}></div>
 					<div className={`key medium ${run ? 'active' : ''}`}>SHIFT</div>
-				</div>
-				<div className='raw'>
-					<div className={`key medium ${run ? 'active' : ''}`}>MUSIC</div>
 				</div>
 			</div>
 		</div>
