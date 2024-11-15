@@ -14,8 +14,8 @@ const floorBlockTwo = new THREE.MeshStandardMaterial({
 	color: '#eee4e4',
 });
 const trapMaterialOne = new THREE.MeshStandardMaterial({
-	color: '#1be249',
-	metalness: 0.7,
+	color: '#e8e2e2',
+	metalness: 0.8,
 	roughness: 0.5,
 });
 const podiumMaterial = new THREE.MeshStandardMaterial({

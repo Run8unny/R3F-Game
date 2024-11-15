@@ -8,6 +8,7 @@ import useGame from './stores/useGame.jsx';
 import Sky from './Sky.jsx';
 import Finish from './Finish.jsx';
 import Obstacle from './Obstacle.jsx';
+import Music from './Music.jsx';
 
 export default function Experience() {
 	const trapsCount = useGame((state) => state.trapsCount);
@@ -23,6 +24,7 @@ export default function Experience() {
 					<Level trapsCount={trapsCount} level={trapsMix} />
 					<BodyController />
 					<Obstacle />
+					<Music />
 				</Physics>
 				<Finish />
 			</Center>

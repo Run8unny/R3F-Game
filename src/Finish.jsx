@@ -21,7 +21,7 @@ export default function Finish() {
 				bevelSegments={5}
 			>
 				Finish
-				<meshLambertMaterial color={'#282020'} />
+				<meshStandardMaterial color={'#282020'} />
 			</Text3D>
 			<primitive object={balloons.scene} scale={2} position={[4, -12, 52]} />
 		</Float>
